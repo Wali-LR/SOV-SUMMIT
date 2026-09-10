@@ -1162,6 +1162,390 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
     .services__head h2, .services__head .lede { margin-left: 0; margin-right: 0; }
 }
 
+/* ---------- Clients / Who we serve ---------- */
+
+.clients__layout {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: start;
+}
+
+.clients__intro {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+}
+
+.clients__intro .eyebrow { margin-bottom: 1rem; }
+
+.clients__intro h2 {
+    margin-bottom: 1.2rem;
+    max-width: 14ch;
+}
+
+.clients__intro .lede {
+    color: var(--ink-soft);
+    max-width: 42ch;
+    margin-bottom: 2.5rem;
+}
+
+.clients__stat {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-strong);
+    max-width: 26rem;
+}
+
+.clients__stat-num {
+    font-family: var(--font-serif, "Playfair Display", serif);
+    font-size: clamp(2.6rem, 4vw, 3.4rem);
+    line-height: 1;
+    color: var(--gold);
+    font-weight: 400;
+}
+
+.clients__stat-label {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.4;
+}
+
+.clients__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.client-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.35rem 1.35rem 1.4rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+    position: relative;
+}
+
+.client-card:hover {
+    border-color: var(--gold-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px -22px rgba(26, 23, 18, 0.28);
+}
+
+.client-card__icon {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(201, 162, 75, 0.10);
+    color: var(--gold);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.client-card:hover .client-card__icon {
+    background: var(--gold);
+    color: var(--paper);
+}
+
+.client-card h3 {
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 0.3rem;
+    color: var(--ink);
+    letter-spacing: 0;
+}
+
+.client-card p {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+}
+
+@media (max-width: 980px) {
+    .clients__layout { grid-template-columns: 1fr; }
+    .clients__intro {
+        position: static;
+        top: auto;
+    }
+    .clients__intro h2 { max-width: none; }
+}
+
+@media (max-width: 600px) {
+    .clients__grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Values / Why SOV Summit ---------- */
+
+.values__head {
+    max-width: 62rem;
+    margin: 0 auto clamp(3rem, 6vw, 4.5rem);
+    text-align: center;
+}
+
+.values__head .eyebrow { margin-bottom: 1.1rem; }
+
+.values__head h2 {
+    max-width: 22ch;
+    margin: 0 auto 1.2rem;
+}
+
+.values__head .lede {
+    margin: 0 auto;
+    max-width: 54ch;
+    color: var(--ink-soft);
+}
+
+.values__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.value-card {
+    position: relative;
+    padding: 2.25rem 2rem 2rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+.value-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 90% 0%, rgba(201, 162, 75, 0.10), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.value-card:hover {
+    border-color: var(--gold-bright);
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px -26px rgba(26, 23, 18, 0.32);
+}
+
+.value-card:hover::before { opacity: 1; }
+
+.value-card__index {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.6rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.value-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: rgba(201, 162, 75, 0.12);
+    color: var(--gold);
+    margin-bottom: 1.4rem;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.value-card:hover .value-card__icon {
+    background: var(--gold);
+    color: var(--paper);
+    transform: rotate(-6deg);
+}
+
+.value-card h3 {
+    font-size: 1.35rem;
+    line-height: 1.3;
+    margin: 0 0 0.7rem;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.value-card h3::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 28px;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.value-card:hover h3::after { width: 56px; }
+
+.value-card p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.65;
+}
+
+@media (max-width: 800px) {
+    .values__grid { grid-template-columns: 1fr; }
+    .values__head { text-align: left; }
+    .values__head h2, .values__head .lede { margin-left: 0; margin-right: 0; }
+}
+
+/* ---------- Process timeline ---------- */
+
+.process__head {
+    max-width: 62rem;
+    margin: 0 auto clamp(3.5rem, 6vw, 5rem);
+    text-align: center;
+}
+
+.process__head .eyebrow { margin-bottom: 1.1rem; }
+
+.process__head h2 {
+    max-width: 20ch;
+    margin: 0 auto 1.2rem;
+}
+
+.process__head .lede {
+    margin: 0 auto;
+    max-width: 58ch;
+    color: var(--ink-soft);
+}
+
+.process__timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    position: relative;
+}
+
+.process__timeline::before {
+    content: "";
+    position: absolute;
+    top: 26px;
+    left: 6%;
+    right: 6%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 8%, var(--gold-bright) 50%, var(--gold) 92%, transparent 100%);
+    z-index: 0;
+}
+
+.process-step {
+    position: relative;
+    padding-top: 4.2rem;
+    text-align: center;
+}
+
+.process-step__marker {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--paper-alt);
+    border: 1px solid var(--gold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transition: background 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.process-step__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.process-step:hover .process-step__marker {
+    background: var(--gold);
+    transform: translateX(-50%) scale(1.08);
+}
+
+.process-step:hover .process-step__dot {
+    background: var(--paper);
+    transform: scale(1.2);
+}
+
+.process-step__num {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+}
+
+.process-step h3 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    margin: 0 0 0.6rem;
+}
+
+.process-step p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    max-width: 22ch;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 900px) {
+    .process__timeline {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .process__timeline::before {
+        top: 0;
+        bottom: 0;
+        left: 26px;
+        right: auto;
+        width: 1px;
+        height: auto;
+        background: linear-gradient(180deg, transparent 0%, var(--gold) 8%, var(--gold-bright) 50%, var(--gold) 92%, transparent 100%);
+    }
+    .process-step {
+        padding: 0 0 2rem 4.5rem;
+        text-align: left;
+    }
+    .process-step__marker {
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+    .process-step:hover .process-step__marker {
+        transform: scale(1.08);
+    }
+    .process-step p {
+        max-width: none;
+        margin: 0;
+    }
+}
+
 /* ---------- CTA band ---------- */
 
 .cta-band {
