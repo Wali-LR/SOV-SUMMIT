@@ -127,7 +127,7 @@ body:not(.has-hero) { padding-top: var(--header-h); }
 }
 
 .brand img {
-    height: 34px;
+    height: 40px;
     width: auto;
     display: block;
 }
@@ -149,7 +149,7 @@ nav.primary-nav > ul {
     padding: 0;
 }
 
-nav.primary-nav a {
+nav.primary-nav a:not(.nav-cta) {
     color: rgba(251, 249, 245, 0.82);
     padding: 0.4rem 0.1rem;
     font-size: 0.78rem;
@@ -159,8 +159,8 @@ nav.primary-nav a {
     transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-nav.primary-nav a:hover,
-nav.primary-nav a[aria-current="page"] {
+nav.primary-nav a:not(.nav-cta):hover,
+nav.primary-nav a:not(.nav-cta)[aria-current="page"] {
     color: var(--paper);
     border-bottom-color: var(--gold-bright);
 }
