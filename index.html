@@ -29,7 +29,10 @@
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul><li><a href="/" aria-current="page">Home</a></li><li><a href="/about/">About</a></li><li class="has-dropdown"><a href="/services/">Services</a><ul class="dropdown"><li><a href="/services/planning-coordination/">Planning & Coordination</a></li><li><a href="/services/conference-planning/">Conference Planning</a></li><li><a href="/services/delegation-management/">Delegation Management</a></li><li><a href="/services/events-productions/">Events & Productions</a></li><li><a href="/services/security-coordination/">Security Coordination</a></li><li><a href="/services/media-coverage/">Media Coverage</a></li><li><a href="/services/travel-experiences/">Travel & Experiences</a></li><li><a href="/management-training/">Management Training</a></li></ul></li><li><a href="/management-training/">Management Training</a></li><li><a href="/events/">Events</a></li><li><a href="/services/travel-experiences/">Travel & Experiences</a></li><li><a href="/insights/">Insights</a></li></ul>
-      <a class="nav-cta" href="/contact/">Start a Conversation</a>
+      <a class="nav-cta" href="/contact/">
+        <span>Start a Conversation</span>
+        <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </nav>
     <button class="nav-toggle" aria-expanded="false" aria-label="Toggle menu">Menu</button>
   </div>
@@ -37,23 +40,71 @@
 
 <main id="main">
 
-<section class="hero">
-  <div class="container">
-    <div class="grid">
-      <div>
-        <p class="brandline">PEOPLE &middot; IDEAS &middot; IMPACT</p>
-        <h1>Connecting the dots. Delivering successful events.</h1>
+<section class="hero" id="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-aura"></div>
+    <div class="hero-gradient hero-gradient--tr"></div>
+    <div class="hero-gradient hero-gradient--bl"></div>
+    <div class="hero-grain"></div>
+  </div>
+
+  <div class="container hero-inner">
+    <div class="hero-grid">
+      <div class="hero-lead">
+        <div class="brand-rule" aria-hidden="true">
+          <span class="brand-rule__line"></span>
+          <span class="brand-rule__dot"></span>
+        </div>
+        <p class="brandline reveal" data-reveal="up">PEOPLE <span class="brandline-dot">&middot;</span> IDEAS <span class="brandline-dot">&middot;</span> IMPACT</p>
+        <h1 class="hero-title" data-reveal-words>
+          Connecting the dots. Delivering <em>successful</em> events.
+        </h1>
       </div>
-      <div class="hero-aside">
+
+      <aside class="hero-aside reveal" data-reveal="up" data-reveal-delay="200">
         <p class="lede">SOV SUMMIT connects governments, corporations, institutions, and private clients with the right providers for events, management training, international delegations, travel experiences, security coordination, and media coverage.</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="/services/">Explore Our Services</a>
-          <a class="btn btn-secondary" href="/contact/">Start a Conversation</a>
+          <a class="btn btn-primary btn-magnetic" href="/services/">
+            <span class="btn-label">Explore Our Services</span>
+            <span class="btn-shimmer" aria-hidden="true"></span>
+            <svg class="btn-arrow" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-secondary btn-magnetic" href="/contact/">
+            <span class="btn-label">Start a Conversation</span>
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <div class="hero-meta">
+      <div class="hero-marquee" aria-hidden="true">
+        <div class="hero-marquee__track">
+          <span>Governments</span><span class="dot">&bull;</span>
+          <span>Corporations</span><span class="dot">&bull;</span>
+          <span>Institutions</span><span class="dot">&bull;</span>
+          <span>Private Clients</span><span class="dot">&bull;</span>
+          <span>Delegations</span><span class="dot">&bull;</span>
+          <span>Conferences</span><span class="dot">&bull;</span>
+          <span>Media Coverage</span><span class="dot">&bull;</span>
+          <span>Governments</span><span class="dot">&bull;</span>
+          <span>Corporations</span><span class="dot">&bull;</span>
+          <span>Institutions</span><span class="dot">&bull;</span>
+          <span>Private Clients</span><span class="dot">&bull;</span>
+          <span>Delegations</span><span class="dot">&bull;</span>
+          <span>Conferences</span><span class="dot">&bull;</span>
+          <span>Media Coverage</span><span class="dot">&bull;</span>
         </div>
       </div>
+
+      <a class="scroll-cue" href="#about-anchor" aria-label="Scroll to next section">
+        <span class="scroll-cue__label">Scroll</span>
+        <span class="scroll-cue__line" aria-hidden="true"><span></span></span>
+      </a>
     </div>
   </div>
 </section>
+
+<span id="about-anchor" aria-hidden="true"></span>
 
 <section class=""><div class="container">
 <div class="section-head wide">
