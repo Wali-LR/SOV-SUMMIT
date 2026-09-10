@@ -924,6 +924,112 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
     .approach__head h2, .approach__head .lede { margin-left: 0; margin-right: 0; }
 }
 
+/* ---------- Pillars (dark gradient) ---------- */
+
+.pillars {
+    position: relative;
+    background: linear-gradient(180deg, #14110c 0%, #1a1712 55%, #100e0a 100%);
+    color: var(--paper);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.pillars__glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(60% 55% at 50% 0%, rgba(201, 162, 75, 0.22) 0%, transparent 70%),
+        radial-gradient(50% 50% at 85% 100%, rgba(201, 162, 75, 0.10) 0%, transparent 65%);
+    pointer-events: none;
+}
+
+.pillars .container { position: relative; z-index: 1; }
+
+.pillars__head {
+    max-width: 62rem;
+    margin: 0 auto clamp(3rem, 6vw, 4.5rem);
+    text-align: center;
+}
+
+.pillars__head .eyebrow {
+    color: var(--gold-bright);
+    margin-bottom: 1.1rem;
+}
+
+.pillars__head h2 {
+    color: var(--paper);
+    max-width: 26ch;
+    margin: 0 auto;
+}
+
+.pillars__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(201, 162, 75, 0.28);
+    border-bottom: 1px solid rgba(201, 162, 75, 0.28);
+}
+
+.pillar {
+    padding: clamp(2rem, 3.5vw, 3rem) clamp(1.5rem, 2.5vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.pillar + .pillar {
+    border-left: 1px solid rgba(201, 162, 75, 0.22);
+}
+
+.pillar:hover { background: rgba(201, 162, 75, 0.04); }
+
+.pillar__num {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    font-weight: 600;
+    color: var(--gold-bright);
+}
+
+.pillar h3 {
+    color: var(--paper);
+    font-size: 1.6rem;
+    line-height: 1.2;
+    margin: 0;
+    position: relative;
+    padding-bottom: 0.9rem;
+}
+
+.pillar h3::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 32px;
+    height: 1px;
+    background: var(--gold-bright);
+}
+
+.pillar p {
+    margin: 0;
+    color: rgba(251, 249, 245, 0.72);
+    font-size: 0.98rem;
+    line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+    .pillars__grid { grid-template-columns: 1fr; }
+    .pillar + .pillar {
+        border-left: none;
+        border-top: 1px solid rgba(201, 162, 75, 0.22);
+    }
+    .pillars__head { text-align: left; }
+    .pillars__head h2 { margin-left: 0; margin-right: 0; }
+}
+
 /* ---------- CTA band ---------- */
 
 .cta-band {
