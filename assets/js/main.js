@@ -27,7 +27,92 @@ document.addEventListener("DOMContentLoaded", function () {
 
     initHeader();
     initHero();
+    initCookieBanner();
 });
+
+function initCookieBanner() {
+    var STORAGE_KEY = "sov_cookie_consent";
+    var COOKIE_ICON_SVG =
+        '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">' +
+            '<path fill="currentColor" d="M21.6 11.1a4.2 4.2 0 0 1-4.7-4.7 4.2 4.2 0 0 1-4.6-4.3A10 10 0 1 0 22 12c0-.3 0-.6-.4-.9zM8 15.5a1.3 1.3 0 1 1 1.3-1.3A1.3 1.3 0 0 1 8 15.5zm-.5-5a1 1 0 1 1 1-1 1 1 0 0 1-1 1zm4.5 6a1 1 0 1 1 1-1 1 1 0 0 1-1 1zm3-3a1.3 1.3 0 1 1 1.3-1.3 1.3 1.3 0 0 1-1.3 1.3z"/>' +
+        '</svg>';
+
+    var banner = null;
+    var toggle = null;
+
+    function readConsent() {
+        try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+    }
+    function writeConsent(value) {
+        try { localStorage.setItem(STORAGE_KEY, value); } catch (e) { /* ignore */ }
+    }
+
+    function buildBanner() {
+        var el = document.createElement("div");
+        el.className = "cookie-banner";
+        el.setAttribute("role", "dialog");
+        el.setAttribute("aria-live", "polite");
+        el.setAttribute("aria-label", "Cookie consent");
+        el.innerHTML =
+            '<button type="button" class="cookie-banner__close" data-cookie-action="close" aria-label="Close">&times;</button>' +
+            '<div class="cookie-banner__icon" aria-hidden="true">' + COOKIE_ICON_SVG + '</div>' +
+            '<p class="cookie-banner__title">We value your privacy</p>' +
+            '<p class="cookie-banner__text">This site uses cookies to keep the essentials working and, with your consent, to help us understand how the site is used. See our <a href="/cookie-policy/">Cookie Policy</a> and <a href="/privacy-policy/">Privacy Policy</a>.</p>' +
+            '<div class="cookie-banner__actions">' +
+                '<button type="button" class="cookie-banner__btn cookie-banner__btn--ghost" data-cookie-action="decline">Decline</button>' +
+                '<button type="button" class="cookie-banner__btn cookie-banner__btn--primary" data-cookie-action="accept">Accept</button>' +
+            '</div>';
+        el.addEventListener("click", function (e) {
+            var target = e.target.closest("[data-cookie-action]");
+            if (!target) return;
+            var action = target.getAttribute("data-cookie-action");
+            if (action === "accept" || action === "decline") writeConsent(action);
+            hideBanner();
+            showToggle();
+        });
+        return el;
+    }
+
+    function buildToggle() {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "cookie-toggle";
+        btn.setAttribute("aria-label", "Cookie preferences");
+        btn.innerHTML = COOKIE_ICON_SVG;
+        btn.addEventListener("click", function () {
+            hideToggle();
+            showBanner();
+        });
+        return btn;
+    }
+
+    function showBanner() {
+        if (!banner) banner = buildBanner();
+        if (!banner.parentNode) document.body.appendChild(banner);
+        requestAnimationFrame(function () { banner.classList.add("is-visible"); });
+    }
+    function hideBanner() {
+        if (!banner) return;
+        banner.classList.remove("is-visible");
+        setTimeout(function () { if (banner && banner.parentNode) banner.parentNode.removeChild(banner); }, 320);
+    }
+    function showToggle() {
+        if (!toggle) toggle = buildToggle();
+        if (!toggle.parentNode) document.body.appendChild(toggle);
+        requestAnimationFrame(function () { toggle.classList.add("is-visible"); });
+    }
+    function hideToggle() {
+        if (!toggle) return;
+        toggle.classList.remove("is-visible");
+        setTimeout(function () { if (toggle && toggle.parentNode) toggle.parentNode.removeChild(toggle); }, 240);
+    }
+
+    if (readConsent()) {
+        showToggle();
+    } else {
+        showBanner();
+    }
+}
 
 function initHeader() {
     var header = document.querySelector(".site-header");
