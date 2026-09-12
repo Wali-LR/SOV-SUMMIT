@@ -34,19 +34,70 @@ document.addEventListener("DOMContentLoaded", function () {
 function initHeroDiagram() {
     var diagram = document.querySelector(".hero-diagram");
     if (!diagram) return;
-    var nodes = diagram.querySelectorAll(".hero-diagram__node");
+    var nodes = Array.prototype.slice.call(diagram.querySelectorAll(".hero-diagram__node"));
+    var lines = {};
+    diagram.querySelectorAll(".hero-diagram__line").forEach(function (line) {
+        lines[line.getAttribute("data-line")] = line;
+    });
+
+    var userInteracting = false;
+    var pauseTimeout = null;
+
+    function clearAll() {
+        nodes.forEach(function (n) { n.classList.remove("is-highlighted"); });
+        Object.keys(lines).forEach(function (k) { lines[k].classList.remove("is-active"); });
+    }
+    function activateById(id) {
+        clearAll();
+        var node = nodes.find(function (n) { return n.getAttribute("data-node") === String(id); });
+        if (node) node.classList.add("is-highlighted");
+        if (lines[id]) lines[id].classList.add("is-active");
+    }
+
     nodes.forEach(function (node) {
         var id = node.getAttribute("data-node");
         if (!id) return;
-        var line = diagram.querySelector('.hero-diagram__line[data-line="' + id + '"]');
-        if (!line) return;
-        var activate = function () { line.classList.add("is-active"); };
-        var deactivate = function () { line.classList.remove("is-active"); };
-        node.addEventListener("mouseenter", activate);
-        node.addEventListener("mouseleave", deactivate);
-        node.addEventListener("focusin", activate);
-        node.addEventListener("focusout", deactivate);
+        var onEnter = function () {
+            userInteracting = true;
+            clearTimeout(pauseTimeout);
+            activateById(id);
+        };
+        var onLeave = function () {
+            pauseTimeout = setTimeout(function () { userInteracting = false; }, 1200);
+        };
+        node.addEventListener("mouseenter", onEnter);
+        node.addEventListener("mouseleave", onLeave);
+        node.addEventListener("focusin", onEnter);
+        node.addEventListener("focusout", onLeave);
     });
+
+    // Auto-cycle activation for continuous motion
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduced) {
+        var cursor = 1;
+        setInterval(function () {
+            if (userInteracting) return;
+            activateById(cursor);
+            cursor = cursor >= nodes.length ? 1 : cursor + 1;
+        }, 1800);
+    }
+
+    // Parallax tilt toward pointer
+    var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (fine && !reduced) {
+        var rect = null;
+        diagram.addEventListener("pointerenter", function () { rect = diagram.getBoundingClientRect(); });
+        diagram.addEventListener("pointermove", function (e) {
+            if (!rect) rect = diagram.getBoundingClientRect();
+            var x = (e.clientX - rect.left) / rect.width - 0.5;
+            var y = (e.clientY - rect.top) / rect.height - 0.5;
+            diagram.style.transform = "perspective(900px) rotateY(" + (x * 6) + "deg) rotateX(" + (-y * 6) + "deg)";
+        });
+        diagram.addEventListener("pointerleave", function () {
+            diagram.style.transform = "";
+            rect = null;
+        });
+    }
 }
 
 function initCookieBanner() {
