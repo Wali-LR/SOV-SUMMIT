@@ -412,13 +412,15 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
 .hero-inner { position: relative; }
 
 .hero-grid {
-    display: block;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
 }
 
 .hero-lead {
     position: relative;
     padding-left: clamp(1.25rem, 2.5vw, 2rem);
-    max-width: 780px;
 }
 
 .brand-rule {
@@ -532,6 +534,188 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
     align-items: center;
     gap: 0.9rem;
     margin-top: 2rem;
+}
+
+/* Hero diagram ---------------------------------------------------- */
+.hero-diagram {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    justify-self: end;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: heroDiagramIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+.hero-diagram__ring {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+}
+.hero-diagram__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+.hero-diagram__line {
+    fill: none;
+    stroke: rgba(201, 162, 75, 0.35);
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: heroLineDraw 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(0.45s + (var(--line, 1) - 1) * 0.08s);
+    transition: stroke 0.3s ease, stroke-width 0.3s ease, filter 0.3s ease;
+}
+.hero-diagram__line[data-line="1"] { --line: 1; }
+.hero-diagram__line[data-line="2"] { --line: 2; }
+.hero-diagram__line[data-line="3"] { --line: 3; }
+.hero-diagram__line[data-line="4"] { --line: 4; }
+.hero-diagram__line[data-line="5"] { --line: 5; }
+.hero-diagram__line[data-line="6"] { --line: 6; }
+.hero-diagram__line.is-active {
+    stroke: var(--gold-bright);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 6px rgba(201, 162, 75, 0.55));
+}
+
+.hero-diagram__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 38%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 40%, rgba(201, 162, 75, 0.35) 0%, rgba(26, 23, 18, 0.95) 70%);
+    border: 1.5px solid var(--gold-bright);
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    box-shadow:
+        0 0 0 5px rgba(201, 162, 75, 0.12),
+        0 0 32px rgba(201, 162, 75, 0.35),
+        0 14px 48px rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    animation: heroCenterIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+    z-index: 2;
+}
+.hero-diagram__pulse {
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(201, 162, 75, 0.7);
+    animation: heroPulse 2.8s ease-out infinite;
+    animation-delay: 1.4s;
+    pointer-events: none;
+}
+.hero-diagram__center-icon {
+    width: 28%;
+    height: auto;
+    color: var(--gold-bright);
+    filter: drop-shadow(0 0 6px rgba(201, 162, 75, 0.6));
+}
+.hero-diagram__center-label {
+    font-family: var(--font-serif);
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.1;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: var(--paper);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.hero-diagram__node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 10px;
+    min-width: 66px;
+    background: rgba(26, 23, 18, 0.72);
+    border: 1px solid rgba(201, 162, 75, 0.28);
+    border-radius: 8px;
+    color: var(--paper);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.32);
+    opacity: 0;
+    transform: translate(var(--tx, 0), var(--ty, 8px)) scale(0.9);
+    animation: heroNodeIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(0.7s + (var(--i, 1) - 1) * 0.09s);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    z-index: 3;
+    cursor: default;
+}
+.hero-diagram__node[data-pos="top"]    { top: 0;    left: 50%; --tx: -50%; --ty: -8px; }
+.hero-diagram__node[data-pos="tr"]     { top: 22%;  right: 0;  --tx: 0;    --ty: -6px; }
+.hero-diagram__node[data-pos="br"]     { bottom: 22%; right: 0; --tx: 0;   --ty: 6px; }
+.hero-diagram__node[data-pos="bottom"] { bottom: 0; left: 50%; --tx: -50%; --ty: 8px; }
+.hero-diagram__node[data-pos="bl"]     { bottom: 22%; left: 0; --tx: 0;    --ty: 6px; }
+.hero-diagram__node[data-pos="tl"]     { top: 22%;  left: 0;   --tx: 0;    --ty: -6px; }
+
+.hero-diagram__node:hover {
+    border-color: var(--gold-bright);
+    background: rgba(26, 23, 18, 0.9);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(201, 162, 75, 0.35);
+    transform: translate(var(--tx, 0), calc(var(--ty, 0) - 4px)) scale(1.04);
+}
+.hero-diagram__node-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-bright);
+    transition: transform 0.35s ease, color 0.3s ease;
+}
+.hero-diagram__node-icon svg { width: 100%; height: 100%; }
+.hero-diagram__node:hover .hero-diagram__node-icon {
+    transform: scale(1.08);
+    color: var(--paper);
+}
+.hero-diagram__node-label {
+    font-family: var(--font-sans);
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(251, 249, 245, 0.85);
+    white-space: nowrap;
+}
+
+@keyframes heroDiagramIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroCenterIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes heroNodeIn {
+    to { opacity: 1; transform: translate(var(--tx, 0), var(--ty, 0)) scale(1); }
+}
+@keyframes heroLineDraw {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes heroPulse {
+    0%   { transform: scale(1);   opacity: 0.6; }
+    70%  { transform: scale(1.5); opacity: 0;   }
+    100% { transform: scale(1.5); opacity: 0;   }
+}
+
+@media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-diagram { display: none; }
 }
 
 .btn {

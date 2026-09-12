@@ -27,8 +27,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     initHeader();
     initHero();
+    initHeroDiagram();
     initCookieBanner();
 });
+
+function initHeroDiagram() {
+    var diagram = document.querySelector(".hero-diagram");
+    if (!diagram) return;
+    var nodes = diagram.querySelectorAll(".hero-diagram__node");
+    nodes.forEach(function (node) {
+        var id = node.getAttribute("data-node");
+        if (!id) return;
+        var line = diagram.querySelector('.hero-diagram__line[data-line="' + id + '"]');
+        if (!line) return;
+        var activate = function () { line.classList.add("is-active"); };
+        var deactivate = function () { line.classList.remove("is-active"); };
+        node.addEventListener("mouseenter", activate);
+        node.addEventListener("mouseleave", deactivate);
+        node.addEventListener("focusin", activate);
+        node.addEventListener("focusout", deactivate);
+    });
+}
 
 function initCookieBanner() {
     var STORAGE_KEY = "sov_cookie_consent";
