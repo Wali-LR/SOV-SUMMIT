@@ -714,8 +714,14 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
 }
 
 @media (max-width: 1024px) {
-    .hero-grid { grid-template-columns: 1fr; }
-    .hero-diagram { display: none; }
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: clamp(2.5rem, 6vw, 3.5rem);
+    }
+    .hero-diagram {
+        justify-self: center;
+        max-width: 380px;
+    }
 }
 
 .btn {
@@ -847,10 +853,72 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
 /* Responsive ------------------------------------------------------ */
 @media (max-width: 900px) {
     .hero-title { max-width: 100%; }
+    .hero {
+        padding: clamp(6rem, 14vw, 8rem) 0 clamp(2.25rem, 5vw, 3.5rem);
+        min-height: auto;
+    }
+    .hero-subtitle { max-width: 42ch; }
 }
+
+@media (max-width: 720px) {
+    .hero {
+        padding: clamp(5.5rem, 18vw, 7rem) 0 2.25rem;
+    }
+    .hero-lead {
+        padding-left: 1rem;
+    }
+    .hero-title {
+        font-size: clamp(2.2rem, 8.8vw, 3.4rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+    .cta-row {
+        gap: 0.75rem;
+        margin-top: 1.75rem;
+        width: 100%;
+    }
+    .cta-row .btn {
+        flex: 1 1 auto;
+        justify-content: center;
+        padding: 0.9rem 1.25rem;
+    }
+    .hero-diagram { max-width: 320px; }
+    .hero-diagram__node { padding: 6px 8px; min-width: 60px; gap: 3px; }
+    .hero-diagram__node-icon { width: 18px; height: 18px; }
+    .hero-diagram__node-label { font-size: 0.55rem; letter-spacing: 0.05em; }
+    .hero-diagram__center-label { font-size: 0.78rem; }
+    .hero-diagram__center { width: 40%; }
+}
+
 @media (max-width: 620px) {
-    .hero-meta { grid-template-columns: 1fr; }
+    .hero-meta {
+        grid-template-columns: 1fr;
+        margin-top: clamp(2.25rem, 8vw, 3rem);
+        gap: 1.5rem;
+        padding-top: 1.25rem;
+    }
     .scroll-cue { justify-self: start; }
+    .hero-marquee__track {
+        font-size: 0.7rem;
+        gap: 1.25rem;
+        letter-spacing: 0.18em;
+    }
+}
+
+@media (max-width: 460px) {
+    .hero-title { font-size: clamp(2rem, 9.5vw, 2.75rem); }
+    .hero .brandline { font-size: 0.72rem; letter-spacing: 0.14em; }
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .cta-row .btn { width: 100%; }
+    .hero-diagram { max-width: 280px; }
+    .hero-diagram__node-label { font-size: 0.5rem; }
+    .hero-diagram__node { min-width: 54px; padding: 5px 6px; }
+    .hero-diagram__node-icon { width: 16px; height: 16px; }
+    .hero-diagram__center-label { font-size: 0.72rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
