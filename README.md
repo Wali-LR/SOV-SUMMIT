@@ -1,106 +1,58 @@
-# SOV SUMMIT — Website
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-The full Phase 1 build for sov-summit.com: 17 pages of approved content,
-structured for SEO and AEO, in the approved white / gold / charcoal visual
-system (Cormorant Garamond + Manrope).
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## Structure
+## About Laravel
 
-```
-sov-summit/
-├── index.html                                  # Home
-├── about/index.html
-├── services/index.html                         # Services overview
-├── services/planning-coordination/index.html
-├── services/conference-planning/index.html
-├── services/delegation-management/index.html
-├── services/events-productions/index.html
-├── services/security-coordination/index.html
-├── services/media-coverage/index.html
-├── services/travel-experiences/index.html
-├── management-training/index.html
-├── events/index.html                           # Events overview
-├── insights/index.html                         # Insights hub (articles are Phase 2)
-├── contact/index.html
-├── legal-notice/index.html
-├── privacy-policy/index.html
-├── cookie-policy/index.html
-├── 404.html
-├── sitemap.xml
-├── robots.txt
-├── assets/
-│   ├── css/style.css                           # shared design system
-│   ├── js/main.js                              # mobile nav toggle
-│   └── img/logo.png
-└── docs/
-    └── DEVELOPMENT_GUIDE.md                    # master build spec (source of truth)
-```
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-Every page shares one header/footer/nav and links only to pages that exist in
-this build (individual event-type pages like `/events/conferences/` are
-Phase 2, per the guide's launch order, so the Events dropdown was kept to a
-single overview page rather than linking out to pages that don't exist yet).
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-## How this was built
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-Rather than hand-writing 17 near-identical HTML shells, the site is generated
-from a small Python template (not included in this zip — it's a one-time
-build tool, not part of the site). The generated HTML files are plain static
-markup, so you can edit them directly going forward.
+## Learning Laravel
 
-## Running locally
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+
+In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+
+You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+
+## Agentic Development
+
+Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
 
 ```bash
-cd sov-summit
-python3 -m http.server 8000
+composer require laravel/boost --dev
+
+php artisan boost:install
 ```
 
-Visit `http://localhost:8000`.
+Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
 
-## Deploying with GitHub Pages
+## Contributing
 
-1. Push this repo to GitHub.
-2. **Settings → Pages** → Source: `Deploy from a branch` → `main` / `/ (root)`.
-3. If using the apex domain `sov-summit.com`, add a `CNAME` file at the repo
-   root containing `sov-summit.com` and configure DNS per GitHub's custom
-   domain docs.
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Before this goes live — things that need real decisions, not code
+## Code of Conduct
 
-- **Contact form has no backend.** GitHub Pages only serves static files. The
-  form in `/contact/` is fully built (all fields from the spec, validation,
-  consent checkbox) but its `action="#"` needs to point at a real form
-  handler — Formspree, a Netlify-hosted form, or a custom endpoint — before
-  submissions actually go anywhere.
-- **Legal Notice, Privacy Policy, and Cookie Policy are starting templates**,
-  built from the company facts you provided (UID, registration number,
-  address) but not reviewed by a lawyer. They say so at the bottom of each
-  page — have counsel check them (especially the FADP/GDPR data-handling
-  language) before launch.
-- **Imagery.** Every page currently ships without photography or the hero
-  video described in the brief (conferences, delegations, venues, aviation,
-  in motion). The layouts have space reserved for it, but no stock or
-  licensed footage has been added — the brief is explicit that generic
-  luxury stock should be avoided in favour of real editorial photography.
-- **Favicon** currently reuses the wide wordmark logo, which browsers will
-  letterbox/shrink into a square tile. A dedicated square mark (or the "S"
-  monogram mentioned in the brief) would look sharper at favicon size.
-- **Domain / canonical URLs** in every page's `<link rel="canonical">` and
-  Open Graph tags point at `https://sov-summit.com`. Update these (a simple
-  find-and-replace across the HTML) if launch uses a different URL until DNS
-  is live.
-- **Insights section** is a placeholder hub listing the six Phase 2 article
-  topics as "coming soon" — no articles are written yet, per the guide's own
-  phased launch order.
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Notes
+## Security Vulnerabilities
 
-- Fonts (Cormorant Garamond, Manrope) load from Google Fonts via CDN.
-- JSON-LD is included on every page: `Organization` sitewide, `BreadcrumbList`
-  on every page, `Service` on each service page, and `FAQPage` wherever an
-  FAQ block is visibly on the page — matching the guide's rule that
-  structured data must match visible content.
-- All internal links were checked programmatically; there are no broken
-  links or 404s within the site.
-- See `docs/DEVELOPMENT_GUIDE.md` for the full sitemap, content rules, and
-  SEO/AEO requirements this build follows.
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
