@@ -73,9 +73,10 @@ class SeoGeneratorController extends Controller
             $lines[] = 'Additional context: '.$context;
         }
         $lines[] = 'Return JSON with exactly these fields:';
-        $lines[] = '- "seo_title": SEO-optimized page title, 50-60 characters, includes the event name naturally. No pipes to brand at the end.';
-        $lines[] = '- "summary": meta description, ONE sentence, max 155 characters. Does not repeat the title verbatim.';
+        $lines[] = '- "seo_title": SEO page title, STRICT 50 to 60 characters. Count carefully. Do NOT exceed 60 characters. Do NOT append subtitles, pipe separators, brand names, or descriptive tails. Keep it tight — just the event identity and, if space allows within 60, the location.';
+        $lines[] = '- "summary": meta description, ONE sentence, 130-155 characters. Do not repeat the seo_title verbatim.';
         $lines[] = '- "seo_keywords": 6-10 relevant keywords/phrases, comma-separated, lowercase, no hashtags.';
+        $lines[] = 'Before returning, silently count the characters of seo_title and shorten it if it exceeds 60.';
         return implode("\n", $lines);
     }
 

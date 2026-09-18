@@ -21,6 +21,27 @@
     .note-editable li { margin: 4px 0; }
     .note-editable blockquote { border-left: 3px solid rgb(203 213 225); padding-left: 12px; margin: 12px 0; color: rgb(71 85 105); }
     .note-placeholder { color: rgb(148 163 184); }
+    .sn-upload-placeholder {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 8px 12px; margin: 4px 0;
+        background: rgb(241 245 249); border: 1px dashed rgb(148 163 184);
+        border-radius: 6px; font-size: 12px; color: rgb(71 85 105);
+        user-select: none;
+    }
+    .sn-upload-placeholder::before {
+        content: ""; width: 12px; height: 12px; border-radius: 999px;
+        border: 2px solid rgb(148 163 184); border-top-color: transparent;
+        animation: snspin 0.7s linear infinite;
+    }
+    @keyframes snspin { to { transform: rotate(360deg); } }
+    .sn-toast {
+        position: fixed; z-index: 60; right: 20px; bottom: 20px;
+        padding: 10px 14px; border-radius: 6px; font-size: 13px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        max-width: 320px;
+    }
+    .sn-toast--ok { background: rgb(22 101 52); color: white; }
+    .sn-toast--err { background: rgb(153 27 27); color: white; }
 </style>
 @endpush
 
@@ -84,8 +105,7 @@
             </header>
             <div class="p-5 space-y-3">
                 <div id="generate-description-error" class="hidden rounded-md bg-red-50 border border-red-200 text-red-800 px-3 py-2 text-sm"></div>
-                <textarea id="description" name="description" rows="12" class="hidden">{{ old('description', $event->description) }}</textarea>
-                <div id="description-editor"></div>
+                <textarea id="description" name="description" rows="12">{{ old('description', $event->description) }}</textarea>
                 @error('description') <p class="{{ $errorClass }}">{{ $message }}</p> @enderror
             </div>
         </section>
@@ -259,6 +279,7 @@
 <script>
 (function () {
     const csrf = document.querySelector('meta[name="csrf-token"]').content;
+    const hasExistingCover = {{ $event->cover_url ? 'true' : 'false' }};
 
     // ---- Auto slug from title ----
     const titleEl = document.getElementById('title');
@@ -282,8 +303,7 @@
     });
 
     // ---- Summernote init ----
-    const $desc = jQuery('#description-editor');
-    const initial = document.getElementById('description').value || '';
+    const $desc = jQuery('#description');
     $desc.summernote({
         placeholder: 'Write the event description, or click Generate description to draft one…',
         tabsize: 2,
@@ -297,8 +317,7 @@
             ['view', ['codeview', 'fullscreen']],
         ],
         callbacks: {
-            onChange: function (contents) {
-                document.getElementById('description').value = contents;
+            onChange: function () {
                 updateSeoHealth();
             },
             onImageUpload: function (files) {
@@ -309,7 +328,25 @@
         },
     });
 
+    function showToast(message, ok = true) {
+        const t = document.createElement('div');
+        t.className = 'sn-toast ' + (ok ? 'sn-toast--ok' : 'sn-toast--err');
+        t.textContent = message;
+        document.body.appendChild(t);
+        setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; }, 2200);
+        setTimeout(() => { t.remove(); }, 2600);
+    }
+
     async function uploadInlineImage(file) {
+        const placeholderId = 'sn-up-' + Math.random().toString(36).slice(2);
+        const placeholder = '<span class="sn-upload-placeholder" id="' + placeholderId + '" contenteditable="false">Uploading ' + (file.name || 'image') + '…</span>';
+        $desc.summernote('pasteHTML', placeholder);
+
+        const removePlaceholder = () => {
+            const el = document.getElementById(placeholderId);
+            if (el && el.parentNode) el.parentNode.removeChild(el);
+        };
+
         const fd = new FormData();
         fd.append('file', file);
         try {
@@ -321,24 +358,19 @@
             });
             const json = await res.json();
             if (!res.ok) throw new Error(json.message || json.error || 'Upload failed');
+            removePlaceholder();
             const img = document.createElement('img');
             img.src = json.url;
             img.style.maxWidth = '100%';
             img.setAttribute('data-uploaded', '1');
             $desc.summernote('insertNode', img);
-            document.getElementById('description').value = $desc.summernote('code');
+            showToast('Image uploaded');
         } catch (e) {
-            alert('Image upload failed: ' + (e.message || e));
+            removePlaceholder();
+            showToast('Upload failed: ' + (e.message || e), false);
         }
     }
-    if (initial) $desc.summernote('code', initial);
-
-    const form = $desc.closest('form')[0];
-    if (form) {
-        form.addEventListener('submit', function () {
-            document.getElementById('description').value = $desc.summernote('code');
-        });
-    }
+    // Summernote-lite mirrors its content back to the source textarea on form submit automatically.
 
     // ---- Character counters ----
     function attachCounter(inputId, counterId) {
@@ -355,7 +387,6 @@
     document.getElementById('cover_image').addEventListener('change', updateSeoHealth);
 
     // ---- SEO health checklist ----
-    const hasExistingCover = {{ $event->cover_url ? 'true' : 'false' }};
     function setStatus(check, status) {
         const li = document.querySelector('#seo-health-list li[data-check="'+check+'"]');
         if (li) li.setAttribute('data-status', status);
@@ -453,7 +484,6 @@
         if (!json) return;
         if (json.description) {
             $desc.summernote('code', json.description);
-            document.getElementById('description').value = json.description;
             updateSeoHealth();
         }
     });

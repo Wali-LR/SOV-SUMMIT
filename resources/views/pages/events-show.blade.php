@@ -43,7 +43,7 @@
   </header>
 
   <section class="event-detail__body"><div class="container">
-    <div class="prose" style="max-width:70ch;">
+    <div class="prose event-detail__prose">
       @if ($event->description)
         {!! $event->description !!}
       @endif
