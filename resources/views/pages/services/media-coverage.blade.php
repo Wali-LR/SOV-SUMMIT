@@ -1,0 +1,61 @@
+@extends('layouts.site')
+
+@section('title', 'Event Photography, Video Production & Media Coverage | SOV SUMMIT')
+@section('meta_description', 'SOV SUMMIT coordinates photographers, videographers, media teams, event documentation, press support, and post-event visual content.')
+@section('canonical', 'https://sov-summit.com/services/media-coverage/')
+
+@push('head')
+<script type="application/ld+json">{!! '{"@context": "https://schema.org", "@type": "Organization", "name": "SOV SUMMIT", "legalName": "Sovereign Summit GmbH", "url": "https://sov-summit.com/", "logo": "https://sov-summit.com/assets/img/logo.webp", "email": "info@sov-summit.com", "address": {"@type": "PostalAddress", "streetAddress": "Bahnhofstrasse 21", "addressLocality": "Zug", "postalCode": "6300", "addressCountry": "CH"}, "slogan": "People. Ideas. Impact."}' !!}</script>
+<script type="application/ld+json">{!! '{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sov-summit.com/"}, {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://sov-summit.com/services/"}, {"@type": "ListItem", "position": 3, "name": "Media Coverage", "item": "https://sov-summit.com/services/media-coverage/"}]}' !!}</script>
+<script type="application/ld+json">{!! '{"@context": "https://schema.org", "@type": "Service", "name": "Media Coverage", "description": "SOV SUMMIT coordinates photographers, videographers, media teams, event documentation, press support, and post-event visual content.", "provider": {"@type": "Organization", "name": "SOV SUMMIT"}, "url": "https://sov-summit.com/services/media-coverage/", "areaServed": "Worldwide"}' !!}</script>
+<script type="application/ld+json">{!! '{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does SOV SUMMIT provide event photography?", "acceptedAnswer": {"@type": "Answer", "text": "SOV SUMMIT coordinates professional photographers, videographers, and media teams for conferences, corporate events, delegations, productions, and private programmes."}}, {"@type": "Question", "name": "Can SOV SUMMIT arrange video highlights?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Video production and post-event highlight content can be coordinated with suitable media-production partners according to the programme&rsquo;s objectives."}}]}' !!}</script>
+@endpush
+
+@section('breadcrumb')
+<div class="breadcrumb container"><a href="/">Home</a> / <a href="/services">Services</a> / <span>Media Coverage</span></div>
+@endsection
+
+@section('content')
+
+<section class="service-hero"><div class="container">
+  <div class="service-hero__grid">
+    <div class="service-hero__body">
+  <p class="brandline">MEDIA COVERAGE</p>
+  <h1>Capture the moments that matter</h1>
+  <p class="lede">Events create important moments, relationships, and messages. Professional documentation helps organisations preserve those moments and communicate their impact after the event has ended. SOV SUMMIT coordinates suitable photographers, videographers, production teams, and media partners according to the purpose and format of the programme.</p>
+    </div>
+    <figure class="service-hero__figure">
+      <img src="{{ asset('assets/img/services/media.webp') }}" alt="Photographers and press covering an international event" width="900" height="1100" loading="eager">
+    </figure>
+  </div>
+</div></section>
+<section class="alt"><div class="container">
+<div class="split">
+  <div>
+    <h2>Services included</h2>
+    <ul class="check-list"><li>Event photography</li><li>Conference photography</li><li>Executive and delegation documentation</li><li>Video production</li><li>Event highlights</li><li>Interviews</li><li>Corporate communications content</li><li>Press and media coordination</li><li>Social media content</li><li>Behind-the-scenes documentation</li><li>Venue and programme coverage</li><li>Edited photo delivery</li><li>Edited video highlights</li><li>Post-event content packages</li></ul>
+  </div>
+  <div>
+    <h2>Media coverage for</h2>
+    <ul class="check-list"><li>Conferences</li><li>Corporate events</li><li>Executive programmes</li><li>Delegations</li><li>Concerts</li><li>Film festivals</li><li>Fashion shows</li><li>Road shows</li><li>Private events</li><li>Management training programmes</li></ul>
+    <p class="muted" style="margin-top:1.2rem;font-size:0.9rem;">Media services are coordinated with external photographers, videographers, production teams, and media partners according to the assignment.</p>
+  </div>
+</div>
+</div></section>
+<section class="alt"><div class="container"><div class="section-head wide"><h2>Frequently asked</h2></div><details class="faq-item"><summary>Does SOV SUMMIT provide event photography?</summary><p>SOV SUMMIT coordinates professional photographers, videographers, and media teams for conferences, corporate events, delegations, productions, and private programmes.</p></details><details class="faq-item"><summary>Can SOV SUMMIT arrange video highlights?</summary><p>Yes. Video production and post-event highlight content can be coordinated with suitable media-production partners according to the programme&rsquo;s objectives.</p></details></div></section>
+<section class=""><div class="container">
+  <div class="section-head wide" style="text-align:center;margin-left:auto;margin-right:auto;">
+    <span class="eyebrow">Related Services</span>
+    <h2>Continue exploring</h2>
+  </div>
+  <div class="related-services">
+      <a class="related-card" href="/services/events-productions"><div class="related-card__media"><img src="{{ asset('assets/img/services/events.webp') }}" alt="Events & Productions preview" loading="lazy" width="600" height="450"></div><div class="related-card__body"><span class="related-card__title">Events & Productions</span><span class="related-card__arrow" aria-hidden="true">&rarr;</span></div></a>      <a class="related-card" href="/services/conference-planning"><div class="related-card__media"><img src="{{ asset('assets/img/services/conferences.webp') }}" alt="Conference Planning preview" loading="lazy" width="600" height="450"></div><div class="related-card__body"><span class="related-card__title">Conference Planning</span><span class="related-card__arrow" aria-hidden="true">&rarr;</span></div></a>      <a class="related-card" href="/services/delegation-management"><div class="related-card__media"><img src="{{ asset('assets/img/services/delegation.webp') }}" alt="Delegation Management preview" loading="lazy" width="600" height="450"></div><div class="related-card__body"><span class="related-card__title">Delegation Management</span><span class="related-card__arrow" aria-hidden="true">&rarr;</span></div></a></div>
+</div></section>
+
+<section class="cta-band"><div class="container">
+<h2>Let&rsquo;s create something meaningful.</h2>
+<p class="lede">Tell us what you are planning and we will connect you with the right providers.</p>
+<div class="cta-row"><a class="btn btn-primary" href="/contact">Discuss Media Coverage</a></div>
+</div></section>
+
+@endsection
