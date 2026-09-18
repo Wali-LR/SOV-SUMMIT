@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" fill="none">
+  <rect width="320" height="200" fill="#f8fafc"/>
+  <rect x="32" y="22" width="140" height="10" rx="2" fill="#0f172a"/>
+  <g>
+    <rect x="24" y="46" width="272" height="30" rx="4" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="36" y="58" width="180" height="6" rx="2" fill="#0f172a"/>
+    <path d="M282 58 l4 4 -4 4" stroke="#94a3b8" fill="none" stroke-width="1.5"/>
+
+    <rect x="24" y="82" width="272" height="60" rx="4" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="36" y="94" width="180" height="6" rx="2" fill="#0f172a"/>
+    <path d="M282 94 l-4 -4 -4 4" stroke="#94a3b8" fill="none" stroke-width="1.5"/>
+    <rect x="36" y="112" width="240" height="4" rx="2" fill="#cbd5e1"/>
+    <rect x="36" y="122" width="200" height="4" rx="2" fill="#cbd5e1"/>
+
+    <rect x="24" y="148" width="272" height="30" rx="4" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="36" y="160" width="180" height="6" rx="2" fill="#0f172a"/>
+    <path d="M282 160 l4 4 -4 4" stroke="#94a3b8" fill="none" stroke-width="1.5"/>
+  </g>
+</svg>

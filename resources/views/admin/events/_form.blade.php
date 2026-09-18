@@ -220,7 +220,7 @@
                             <span class="text-xs">No image uploaded</span>
                         </div>
                     @endif
-                    <input id="cover_image" name="cover_image" type="file" accept="image/jpeg,image/png,image/webp"
+                    <input id="cover_image" name="cover_image" type="file" accept="image/jpeg,image/png,image/webp" data-auto-compress
                            class="block w-full text-xs text-slate-700 file:mr-3 file:px-3 file:py-1.5 file:rounded-md file:border-0 file:bg-slate-900 file:text-white file:cursor-pointer file:text-xs file:font-semibold hover:file:bg-black">
                     <p class="text-[11px] text-slate-500 leading-relaxed">JPG, PNG, WEBP — max 5 MB. Stored on DigitalOcean Spaces under <code class="text-slate-700 font-mono">sob-summit/events/</code>.</p>
                     @error('cover_image') <p class="{{ $errorClass }}">{{ $message }}</p> @enderror
@@ -346,6 +346,10 @@
             const el = document.getElementById(placeholderId);
             if (el && el.parentNode) el.parentNode.removeChild(el);
         };
+
+        if (window.compressImage) {
+            try { file = await window.compressImage(file); } catch (_) { /* fall through with original */ }
+        }
 
         const fd = new FormData();
         fd.append('file', file);

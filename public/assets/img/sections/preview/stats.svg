@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" fill="none">
+  <rect width="320" height="200" fill="#f8fafc"/>
+  <rect x="32" y="30" width="140" height="10" rx="2" fill="#0f172a"/>
+  <g font-family="Manrope,sans-serif" font-weight="700" fill="#0f172a">
+    <text x="52" y="112" font-size="34">120+</text>
+    <text x="132" y="112" font-size="34">40k</text>
+    <text x="220" y="112" font-size="34">99%</text>
+  </g>
+  <g fill="#94a3b8">
+    <rect x="48" y="128" width="66" height="4" rx="2"/>
+    <rect x="128" y="128" width="66" height="4" rx="2"/>
+    <rect x="216" y="128" width="66" height="4" rx="2"/>
+  </g>
+</svg>

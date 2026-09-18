@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\MediaUploadController;
+use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SeoGeneratorController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +50,13 @@ Route::middleware('auth')->group(function () {
         Route::post('events/generate-description', [SeoGeneratorController::class, 'description'])->name('events.generate-description');
         Route::post('media/upload', MediaUploadController::class)->name('media.upload');
         Route::resource('events', AdminEventController::class)->except(['show']);
+
+        Route::get   ('sections/templates',      [SectionController::class, 'templates'])->name('sections.templates');
+        Route::post  ('sections',                [SectionController::class, 'store'])->name('sections.store');
+        Route::post  ('sections/reorder',        [SectionController::class, 'reorder'])->name('sections.reorder');
+        Route::get   ('sections/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
+        Route::patch ('sections/{section}',      [SectionController::class, 'update'])->name('sections.update');
+        Route::delete('sections/{section}',      [SectionController::class, 'destroy'])->name('sections.destroy');
     });
 });
 

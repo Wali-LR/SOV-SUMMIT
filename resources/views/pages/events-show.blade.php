@@ -50,6 +50,8 @@
     </div>
   </div></section>
 
+  <x-content-sections :model="$event" />
+
   @if ($related->isNotEmpty())
     <section class="events-block alt"><div class="container">
       <header class="events-block__head">

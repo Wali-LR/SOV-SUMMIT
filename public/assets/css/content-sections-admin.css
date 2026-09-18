@@ -1,0 +1,237 @@
+/* ========== Content Sections — Admin Overlay ========== */
+
+.cs-adm-toolbar {
+    position: fixed; right: 20px; bottom: 20px; z-index: 9000;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: 999px;
+    background: #0f172a; color: #f8fafc;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.32);
+    font-family: 'Manrope', system-ui, sans-serif;
+}
+.cs-adm-toolbar__badge {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #94a3b8;
+}
+.cs-adm-toolbar__btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 999px;
+    background: #f8fafc; color: #0f172a; border: 0;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: transform 0.15s ease;
+}
+.cs-adm-toolbar__btn:hover { transform: translateY(-1px); }
+
+/* Wrapper hover state */
+.cs-root[data-editor] .cs-wrap {
+    position: relative;
+    transition: outline-color 0.15s ease;
+    outline: 2px dashed transparent;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+.cs-root[data-editor] .cs-wrap:hover,
+.cs-root[data-editor] .cs-wrap.cs-wrap--active {
+    outline-color: #0f172a;
+}
+.cs-root[data-editor] .cs-wrap--hidden {
+    opacity: 0.55;
+}
+.cs-root[data-editor] .cs-wrap--hidden::after {
+    content: "Hidden from public"; position: absolute; top: 8px; left: 12px; z-index: 2;
+    background: #fef3c7; color: #7c5b00; padding: 2px 8px; border-radius: 999px;
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* Section overlay */
+.cs-adm-overlay {
+    position: absolute; top: 10px; right: 10px; z-index: 5;
+    display: none; gap: 6px;
+    background: rgba(15, 23, 42, 0.94);
+    padding: 6px; border-radius: 999px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22);
+    font-family: 'Manrope', system-ui, sans-serif;
+}
+.cs-root[data-editor] .cs-wrap:hover .cs-adm-overlay,
+.cs-root[data-editor] .cs-wrap.cs-wrap--active .cs-adm-overlay {
+    display: inline-flex;
+}
+.cs-adm-btn--icon {
+    background: transparent; border: 0; color: #f8fafc;
+    width: 30px; height: 30px; min-width: 30px; padding: 0; line-height: 1;
+    border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.15s ease;
+    flex: 0 0 auto;
+}
+.cs-adm-btn--icon:hover { background: rgba(248, 250, 252, 0.15); }
+.cs-adm-btn--icon svg { width: 14px; height: 14px; display: block; flex-shrink: 0; }
+.cs-adm-btn--danger:hover { background: rgba(220, 38, 38, 0.35); }
+.cs-adm-move-handle { cursor: grab; }
+.cs-adm-move-handle:active { cursor: grabbing; }
+
+/* Picker modal */
+.cs-adm-picker, .cs-adm-panel {
+    position: fixed; inset: 0; z-index: 9100;
+    font-family: 'Manrope', system-ui, sans-serif;
+}
+.cs-adm-picker[hidden], .cs-adm-panel[hidden] { display: none; }
+.cs-adm-picker__backdrop, .cs-adm-panel__backdrop {
+    position: absolute; inset: 0; background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(3px);
+}
+.cs-adm-picker__panel {
+    position: relative; margin: 5vh auto; max-width: 900px; width: calc(100% - 40px);
+    background: #ffffff; border-radius: 12px; overflow: hidden;
+    max-height: 90vh; display: flex; flex-direction: column;
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.4);
+}
+.cs-adm-picker__head, .cs-adm-panel__head {
+    padding: 20px 24px; border-bottom: 1px solid #e2e8f0;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+.cs-adm-picker__head h3, .cs-adm-panel__head h3 {
+    margin: 0; font-size: 18px; color: #0f172a;
+}
+.cs-adm-picker__head p { margin: 4px 0 0; font-size: 13px; color: #64748b; }
+.cs-adm-icon-btn {
+    background: transparent; border: 0; font-size: 26px; line-height: 1;
+    color: #64748b; cursor: pointer; padding: 4px 8px;
+}
+.cs-adm-icon-btn:hover { color: #0f172a; }
+.cs-adm-picker__grid {
+    padding: 20px 24px; overflow-y: auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.cs-adm-picker__loading { grid-column: 1 / -1; color: #64748b; padding: 30px 0; text-align: center; }
+.cs-adm-picker__card {
+    background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 14px; cursor: pointer; text-align: left; transition: all 0.15s ease;
+    display: flex; flex-direction: column; gap: 10px;
+}
+.cs-adm-picker__card:hover { border-color: #0f172a; transform: translateY(-2px); box-shadow: 0 12px 24px rgba(15,23,42,0.08); }
+.cs-adm-picker__card img { width: 100%; height: 130px; object-fit: cover; border-radius: 4px; background: #f1f5f9; }
+.cs-adm-picker__card-label { font-size: 14px; font-weight: 600; color: #0f172a; }
+.cs-adm-picker__card-desc { font-size: 12px; color: #64748b; margin: 0; line-height: 1.5; }
+@media (max-width: 720px) {
+    .cs-adm-picker__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+    .cs-adm-picker__grid { grid-template-columns: 1fr; }
+}
+
+/* Slide-in edit panel */
+.cs-adm-panel__panel {
+    position: absolute; top: 0; right: 0; height: 100vh; width: 540px; max-width: 100vw;
+    background: #ffffff; box-shadow: -20px 0 50px rgba(15, 23, 42, 0.28);
+    display: flex; flex-direction: column;
+    transform: translateX(0);
+}
+.cs-adm-panel__eyebrow {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #64748b;
+    display: block; margin-bottom: 4px;
+}
+.cs-adm-panel__body {
+    flex: 1; overflow-y: auto; padding: 20px 24px; background: #f8fafc;
+}
+.cs-adm-panel__loading { color: #64748b; padding: 30px 0; text-align: center; }
+.cs-adm-panel__foot {
+    padding: 14px 20px; border-top: 1px solid #e2e8f0; background: #ffffff;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.cs-adm-panel__actions { display: inline-flex; gap: 8px; }
+
+/* Fields */
+.cs-adm-field { margin-bottom: 16px; }
+.cs-adm-field > label {
+    display: block; font-size: 12px; font-weight: 600; color: #334155;
+    margin-bottom: 6px; letter-spacing: 0.02em;
+}
+.cs-adm-field input[type=text],
+.cs-adm-field input[type=number],
+.cs-adm-field textarea,
+.cs-adm-field select {
+    width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px;
+    background: #ffffff; font-size: 14px; color: #0f172a;
+    font-family: inherit;
+}
+.cs-adm-field input:focus, .cs-adm-field textarea:focus, .cs-adm-field select:focus {
+    outline: none; border-color: #0f172a; box-shadow: 0 0 0 1px #0f172a;
+}
+.cs-adm-mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px !important; }
+.cs-adm-hint { font-size: 12px; color: #64748b; margin: 6px 0 0; }
+.cs-adm-hint-inline { font-weight: 400; color: #94a3b8; font-size: 11px; margin-left: 4px; }
+.cs-adm-field--split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* Image field */
+.cs-adm-image {
+    display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;
+    padding: 10px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px;
+}
+.cs-adm-image__preview {
+    width: 120px; height: 90px; background: #f1f5f9; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: #94a3b8; font-size: 11px; overflow: hidden;
+}
+.cs-adm-image__preview img { width: 100%; height: 100%; object-fit: cover; }
+.cs-adm-image__actions { display: flex; flex-direction: column; gap: 6px; font-size: 12px; }
+.cs-adm-image__actions input[type=file] { font-size: 12px; }
+
+/* Repeater */
+.cs-adm-repeater { margin: 20px 0; }
+.cs-adm-repeater__label {
+    display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 8px;
+    letter-spacing: 0.02em;
+}
+.cs-adm-repeater__list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 10px; }
+.cs-adm-repeater__row {
+    position: relative;
+    background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px;
+    padding: 16px 16px 4px;
+}
+.cs-adm-repeater__remove {
+    position: absolute; top: 6px; right: 8px;
+    background: transparent; border: 0; font-size: 22px; line-height: 1;
+    color: #94a3b8; cursor: pointer;
+}
+.cs-adm-repeater__remove:hover { color: #dc2626; }
+
+/* Toggle */
+.cs-adm-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #0f172a; }
+.cs-adm-toggle input { accent-color: #0f172a; }
+
+/* Buttons */
+.cs-adm-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 16px; border-radius: 6px; border: 0;
+    font-size: 13px; font-weight: 600; font-family: inherit;
+    cursor: pointer; transition: background 0.15s ease;
+}
+.cs-adm-btn--primary { background: #0f172a; color: #f8fafc; }
+.cs-adm-btn--primary:hover { background: #000; }
+.cs-adm-btn--ghost { background: transparent; color: #334155; border: 1px solid #cbd5e1; }
+.cs-adm-btn--ghost:hover { border-color: #0f172a; color: #0f172a; }
+.cs-adm-btn--sm { padding: 6px 12px; font-size: 12px; }
+.cs-adm-btn[disabled] { opacity: 0.6; cursor: wait; }
+
+/* Toast */
+.cs-adm-toast {
+    position: fixed; z-index: 9200; right: 20px; bottom: 80px;
+    padding: 10px 14px; border-radius: 6px; font-size: 13px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    font-family: 'Manrope', system-ui, sans-serif;
+}
+.cs-adm-toast--ok { background: #166534; color: #fff; }
+.cs-adm-toast--err { background: #991b1b; color: #fff; }
+
+/* Sortable */
+.cs-adm-sortable-ghost { opacity: 0.4; background: #f1f5f9 !important; }
+.cs-adm-sortable-drag { box-shadow: 0 20px 40px rgba(15,23,42,0.24); }
+
+/* Empty state */
+.cs-root[data-editor] .cs-list:empty::before {
+    content: "No extra sections yet. Click 'Add section' below to add one.";
+    display: block; padding: 40px 20px; text-align: center;
+    color: #64748b; font-size: 14px;
+    border: 1px dashed #cbd5e1; border-radius: 8px;
+    margin: 40px auto; max-width: 640px;
+    font-family: 'Manrope', system-ui, sans-serif;
+}

@@ -99,6 +99,7 @@
             </main>
         </div>
     </div>
+    <script src="{{ asset('assets/js/image-compress.js') }}"></script>
     @stack('scripts')
 </body>
 </html>
