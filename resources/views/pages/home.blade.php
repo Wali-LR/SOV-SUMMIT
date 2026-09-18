@@ -164,21 +164,33 @@
 
     <div class="approach__grid">
       <article class="approach__card">
-        <span class="approach__num" aria-hidden="true">01</span>
-        <h3>The Challenge</h3>
-        <p>Complex events and international programmes require more than a good idea. They demand reliable providers, clear communication, precise planning, and someone who understands how the individual elements fit together.</p>
+        <img class="approach__image" src="{{ asset('assets/img/services/planning.webp') }}" alt="" aria-hidden="true" loading="lazy" width="800" height="1000">
+        <div class="approach__overlay" aria-hidden="true"></div>
+        <div class="approach__body">
+          <span class="approach__num" aria-hidden="true">01</span>
+          <h3>The Challenge</h3>
+          <p>Complex events and international programmes require more than a good idea. They demand reliable providers, clear communication, precise planning, and someone who understands how the individual elements fit together.</p>
+        </div>
       </article>
 
       <article class="approach__card">
-        <span class="approach__num" aria-hidden="true">02</span>
-        <h3>Our Method</h3>
-        <p>SOV SUMMIT brings these elements together through one coordinated approach. We help clients plan, connect, organise, and deliver programmes that require discretion, flexibility, and attention to detail.</p>
+        <img class="approach__image" src="{{ asset('assets/img/services/delegation.webp') }}" alt="" aria-hidden="true" loading="lazy" width="800" height="1000">
+        <div class="approach__overlay" aria-hidden="true"></div>
+        <div class="approach__body">
+          <span class="approach__num" aria-hidden="true">02</span>
+          <h3>Our Method</h3>
+          <p>SOV SUMMIT brings these elements together through one coordinated approach. We help clients plan, connect, organise, and deliver programmes that require discretion, flexibility, and attention to detail.</p>
+        </div>
       </article>
 
       <article class="approach__card">
-        <span class="approach__num" aria-hidden="true">03</span>
-        <h3>Your Outcome</h3>
-        <p>One accountable partner across every element of your programme &mdash; a process that stays clear for the client and consistent for every provider involved.</p>
+        <img class="approach__image" src="{{ asset('assets/img/services/events.webp') }}" alt="" aria-hidden="true" loading="lazy" width="800" height="1000">
+        <div class="approach__overlay" aria-hidden="true"></div>
+        <div class="approach__body">
+          <span class="approach__num" aria-hidden="true">03</span>
+          <h3>Your Outcome</h3>
+          <p>One accountable partner across every element of your programme &mdash; a process that stays clear for the client and consistent for every provider involved.</p>
+        </div>
       </article>
     </div>
   </div>

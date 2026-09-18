@@ -1430,14 +1430,45 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
 
 .approach__card {
     position: relative;
-    padding: 2rem 1.75rem 1.75rem;
-    background: var(--paper);
-    border: 1px solid var(--line);
+    overflow: hidden;
     border-radius: var(--radius);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    min-height: clamp(420px, 46vw, 520px);
+    background: #14110c;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    isolation: isolate;
+    transition: border-color 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+
+.approach__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(0.8);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
+}
+
+.approach__card:hover .approach__image { filter: brightness(0.9); }
+
+.approach__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(20, 17, 12, 0.10) 0%, rgba(20, 17, 12, 0.55) 45%, rgba(20, 17, 12, 0.93) 100%);
+}
+
+.approach__body {
+    position: relative;
+    z-index: 2;
+    padding: clamp(1.5rem, 2.5vw, 2rem);
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
 }
 
 .approach__card::before {
@@ -1446,43 +1477,50 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
     top: 0;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 3px;
     background: linear-gradient(90deg, var(--gold-bright), var(--gold));
+    z-index: 3;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .approach__card:hover {
-    border-color: var(--line-strong);
-    transform: translateY(-3px);
-    box-shadow: 0 18px 40px -22px rgba(26, 23, 18, 0.35);
+    border-color: rgba(201, 162, 75, 0.55);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.6);
 }
 
 .approach__card:hover::before { transform: scaleX(1); }
+.approach__card:hover .approach__image { transform: scale(1.05); }
 
 .approach__num {
     font-family: var(--font-sans);
     font-size: 0.78rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     font-weight: 600;
-    color: var(--gold);
+    color: var(--gold-bright);
 }
 
 .approach__card h3 {
-    font-size: 1.35rem;
-    line-height: 1.25;
+    font-size: clamp(1.4rem, 1.8vw, 1.6rem);
+    line-height: 1.2;
     margin: 0;
+    color: var(--paper);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
 .approach__card p {
     margin: 0;
-    color: var(--ink-soft);
-    font-size: 0.98rem;
+    color: rgba(251, 249, 245, 0.88);
+    font-size: 1rem;
+    line-height: 1.55;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 @media (max-width: 900px) {
     .approach__grid { grid-template-columns: 1fr; }
+    .approach__card { min-height: 380px; }
     .approach__head { text-align: left; }
     .approach__head h2, .approach__head .lede { margin-left: 0; margin-right: 0; }
 }
