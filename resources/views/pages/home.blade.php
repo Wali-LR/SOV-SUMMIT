@@ -154,12 +154,11 @@
 
 <span id="about-anchor" aria-hidden="true"></span>
 
-<section class="approach" aria-labelledby="approach-heading" itemscope itemtype="https://schema.org/Organization">
+<section class="approach" aria-labelledby="approach-heading">
   <div class="container">
     <header class="approach__head">
-      <span class="eyebrow">Our Approach</span>
-      <h2 id="approach-heading" itemprop="slogan">Every successful event begins with the right connections.</h2>
-      <p class="lede" itemprop="description">SOV SUMMIT is an international coordination partner for events, executive programmes, delegations, and complex multi-provider engagements &mdash; bringing structure, discretion, and reliability to every stage.</p>
+      <span class="eyebrow">The SOV Summit Method</span>
+      <h2 id="approach-heading">One partner. The right connections. A successful result.</h2>
     </header>
 
     <div class="approach__grid">
@@ -168,8 +167,8 @@
         <div class="approach__overlay" aria-hidden="true"></div>
         <div class="approach__body">
           <span class="approach__num" aria-hidden="true">01</span>
-          <h3>The Challenge</h3>
-          <p>Complex events and international programmes require more than a good idea. They demand reliable providers, clear communication, precise planning, and someone who understands how the individual elements fit together.</p>
+          <h3>Planning</h3>
+          <p>We develop the operational structure behind your programme, coordinate requirements, and identify suitable providers.</p>
         </div>
       </article>
 
@@ -178,8 +177,8 @@
         <div class="approach__overlay" aria-hidden="true"></div>
         <div class="approach__body">
           <span class="approach__num" aria-hidden="true">02</span>
-          <h3>Our Method</h3>
-          <p>SOV SUMMIT brings these elements together through one coordinated approach. We help clients plan, connect, organise, and deliver programmes that require discretion, flexibility, and attention to detail.</p>
+          <h3>Connecting</h3>
+          <p>We bring together venues, transportation, accommodation, aviation, production, security, hospitality, and media partners.</p>
         </div>
       </article>
 
@@ -188,39 +187,40 @@
         <div class="approach__overlay" aria-hidden="true"></div>
         <div class="approach__body">
           <span class="approach__num" aria-hidden="true">03</span>
-          <h3>Your Outcome</h3>
-          <p>One accountable partner across every element of your programme &mdash; a process that stays clear for the client and consistent for every provider involved.</p>
+          <h3>Delivering</h3>
+          <p>We coordinate the moving parts before and during the programme so that the final experience is organised, professional, and reliable.</p>
         </div>
       </article>
     </div>
   </div>
 </section>
 
-<section class="pillars" aria-labelledby="pillars-heading">
+<section class="pillars" aria-labelledby="pillars-heading" itemscope itemtype="https://schema.org/Organization">
   <div class="pillars__glow" aria-hidden="true"></div>
   <div class="container">
     <header class="pillars__head">
-      <span class="eyebrow">The SOV Summit Method</span>
-      <h2 id="pillars-heading">One partner. The right connections. A successful result.</h2>
+      <span class="eyebrow">Our Approach</span>
+      <h2 id="pillars-heading" itemprop="slogan">Every successful event begins with the right connections.</h2>
+      <p class="lede" itemprop="description">SOV SUMMIT is an international coordination partner for events, executive programmes, delegations, and complex multi-provider engagements &mdash; bringing structure, discretion, and reliability to every stage.</p>
     </header>
 
     <div class="pillars__grid">
       <article class="pillar">
         <span class="pillar__num" aria-hidden="true">01</span>
-        <h3>Planning</h3>
-        <p>We develop the operational structure behind your programme, coordinate requirements, and identify suitable providers.</p>
+        <h3>The Challenge</h3>
+        <p>Complex events and international programmes require more than a good idea. They demand reliable providers, clear communication, precise planning, and someone who understands how the individual elements fit together.</p>
       </article>
 
       <article class="pillar">
         <span class="pillar__num" aria-hidden="true">02</span>
-        <h3>Connecting</h3>
-        <p>We bring together venues, transportation, accommodation, aviation, production, security, hospitality, and media partners.</p>
+        <h3>Our Method</h3>
+        <p>SOV SUMMIT brings these elements together through one coordinated approach. We help clients plan, connect, organise, and deliver programmes that require discretion, flexibility, and attention to detail.</p>
       </article>
 
       <article class="pillar">
         <span class="pillar__num" aria-hidden="true">03</span>
-        <h3>Delivering</h3>
-        <p>We coordinate the moving parts before and during the programme so that the final experience is organised, professional, and reliable.</p>
+        <h3>Your Outcome</h3>
+        <p>One accountable partner across every element of your programme &mdash; a process that stays clear for the client and consistent for every provider involved.</p>
       </article>
     </div>
   </div>
@@ -310,6 +310,29 @@
     </div>
   </div>
 </section>
+
+@if (!empty($featuredEvents) && $featuredEvents->isNotEmpty())
+<section class="featured-events" aria-labelledby="featured-events-heading">
+  <div class="container">
+    <header class="featured-events__head">
+      <span class="eyebrow">Featured Events</span>
+      <h2 id="featured-events-heading">Programmes coordinated with care.</h2>
+      <p class="lede">A short selection of recent and upcoming engagements from our coordination desk.</p>
+    </header>
+    <div class="events-grid">
+      @foreach ($featuredEvents as $event)
+        @include('partials.event-card', ['event' => $event])
+      @endforeach
+    </div>
+    <div class="featured-events__cta-row">
+      <a class="btn btn-secondary" href="{{ route('events.index') }}">
+        <span class="btn-label">View all events</span>
+        <svg class="btn-arrow" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+@endif
 
 <section class="clients alt" aria-labelledby="clients-heading">
   <div class="container">

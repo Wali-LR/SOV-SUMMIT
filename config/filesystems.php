@@ -60,6 +60,20 @@ return [
             'report' => false,
         ],
 
+        'spaces' => [
+            'driver' => 's3',
+            'key' => env('DO_ACCESS_KEY_ID'),
+            'secret' => env('DO_SECRET_ACCESS_KEY'),
+            'region' => env('DO_DEFAULT_REGION'),
+            'bucket' => env('DO_BUCKET'),
+            'endpoint' => env('DO_ENDPOINT'),
+            'use_path_style_endpoint' => false,
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+            'root' => env('DO_PREFIX', 'sob-summit'),
+        ],
+
     ],
 
     /*
