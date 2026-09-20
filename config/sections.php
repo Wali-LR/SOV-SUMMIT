@@ -3,6 +3,7 @@
 return [
     'sectionable_types' => [
         \App\Models\Event::class,
+        \App\Models\Blog::class,
     ],
 
     'types' => [

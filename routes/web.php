@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CommentCategoryController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\MediaUploadController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SeoGeneratorController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +17,13 @@ Route::get('/', function () {
         ->limit(3)
         ->get();
 
-    return view('pages.home', compact('featuredEvents'));
+    $latestPosts = \App\Models\Blog::published()
+        ->orderByDesc('published_at')
+        ->orderByDesc('created_at')
+        ->limit(3)
+        ->get();
+
+    return view('pages.home', compact('featuredEvents', 'latestPosts'));
 })->name('home');
 Route::view('/about',                           'pages.about')->name('about');
 Route::view('/services',                        'pages.services.index')->name('services');
@@ -30,6 +38,8 @@ Route::view('/management-training',             'pages.management-training');
 Route::view('/products',                        'pages.products');
 Route::get('/events',                           [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event:slug}',              [EventController::class, 'show'])->name('events.show');
+Route::get('/blog',                             [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{blog:slug}',                 [BlogController::class, 'show'])->name('blog.show');
 Route::view('/insights',                        'pages.insights');
 Route::view('/contact',                         'pages.contact')->name('contact');
 Route::view('/legal-notice',                    'pages.legal.notice');
@@ -51,6 +61,7 @@ Route::middleware('auth')->group(function () {
         Route::post('events/generate-description', [SeoGeneratorController::class, 'description'])->name('events.generate-description');
         Route::post('media/upload', MediaUploadController::class)->name('media.upload');
         Route::resource('events', AdminEventController::class)->except(['show']);
+        Route::resource('blogs', AdminBlogController::class)->except(['show']);
         Route::resource('comment-categories', CommentCategoryController::class)
             ->parameters(['comment-categories' => 'comment_category'])
             ->except(['show']);
