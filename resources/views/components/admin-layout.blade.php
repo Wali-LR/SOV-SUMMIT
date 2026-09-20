@@ -49,6 +49,14 @@
                     Events
                 </a>
 
+                <div class="px-2 pt-6 pb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">Others</div>
+                @php $isCommentCats = request()->routeIs('admin.comment-categories.*'); @endphp
+                <a href="{{ route('admin.comment-categories.index') }}"
+                   class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium mb-1 {{ $isCommentCats ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd"/></svg>
+                    Comment Categories
+                </a>
+
                 <div class="px-2 pt-6 pb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">External</div>
                 <a href="{{ url('/') }}" target="_blank"
                    class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium mb-1 text-slate-700 hover:bg-slate-100">

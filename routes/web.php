@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CommentCategoryController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\MediaUploadController;
 use App\Http\Controllers\Admin\SectionController;
@@ -50,6 +51,9 @@ Route::middleware('auth')->group(function () {
         Route::post('events/generate-description', [SeoGeneratorController::class, 'description'])->name('events.generate-description');
         Route::post('media/upload', MediaUploadController::class)->name('media.upload');
         Route::resource('events', AdminEventController::class)->except(['show']);
+        Route::resource('comment-categories', CommentCategoryController::class)
+            ->parameters(['comment-categories' => 'comment_category'])
+            ->except(['show']);
 
         Route::get   ('sections/templates',      [SectionController::class, 'templates'])->name('sections.templates');
         Route::post  ('sections',                [SectionController::class, 'store'])->name('sections.store');
