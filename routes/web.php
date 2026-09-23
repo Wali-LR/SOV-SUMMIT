@@ -59,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('events/generate-seo', [SeoGeneratorController::class, 'seo'])->name('events.generate-seo');
         Route::post('events/generate-description', [SeoGeneratorController::class, 'description'])->name('events.generate-description');
+        Route::post('blogs/generate-seo', [SeoGeneratorController::class, 'blogSeo'])->name('blogs.generate-seo');
+        Route::post('blogs/generate-description', [SeoGeneratorController::class, 'blogDescription'])->name('blogs.generate-description');
         Route::post('media/upload', MediaUploadController::class)->name('media.upload');
         Route::resource('events', AdminEventController::class)->except(['show']);
         Route::resource('blogs', AdminBlogController::class)->except(['show']);

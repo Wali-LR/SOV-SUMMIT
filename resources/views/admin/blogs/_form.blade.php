@@ -105,14 +105,22 @@
 
         {{-- Section: Body --}}
         <section class="bg-white border border-slate-200 rounded-lg">
-            <header class="px-5 py-4 border-b border-slate-100">
-                <h3 class="text-sm font-semibold text-slate-900 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
-                    Body
-                </h3>
-                <p class="text-xs text-slate-500 mt-0.5">The main article body. Extra sections can be added on the public page after saving.</p>
+            <header class="px-5 py-4 border-b border-slate-100 flex items-center justify-between gap-4">
+                <div class="min-w-0">
+                    <h3 class="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
+                        Body
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">The main article body. Extra sections can be added on the public page after saving.</p>
+                </div>
+                <button type="button" id="generate-description-btn"
+                    class="inline-flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-black text-white text-sm font-semibold rounded-md disabled:opacity-60 disabled:cursor-wait shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707A1 1 0 004.343 5.757l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"/></svg>
+                    <span id="generate-description-label">Generate description</span>
+                </button>
             </header>
             <div class="p-5 space-y-3">
+                <div id="generate-description-error" class="hidden rounded-md bg-red-50 border border-red-200 text-red-800 px-3 py-2 text-sm"></div>
                 <textarea id="description" name="description" rows="12">{{ old('description', $blog->description) }}</textarea>
                 @error('description') <p class="{{ $errorClass }}">{{ $message }}</p> @enderror
             </div>
@@ -120,14 +128,22 @@
 
         {{-- Section: SEO --}}
         <section class="bg-white border border-slate-200 rounded-lg">
-            <header class="px-5 py-4 border-b border-slate-100">
-                <h3 class="text-sm font-semibold text-slate-900 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>
-                    SEO
-                </h3>
-                <p class="text-xs text-slate-500 mt-0.5">Meta title, description, and keywords for search engines.</p>
+            <header class="px-5 py-4 border-b border-slate-100 flex items-center justify-between gap-4">
+                <div class="min-w-0">
+                    <h3 class="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>
+                        SEO
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Meta title, description, and keywords for search engines.</p>
+                </div>
+                <button type="button" id="generate-seo-btn"
+                    class="inline-flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-black text-white text-sm font-semibold rounded-md disabled:opacity-60 disabled:cursor-wait shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707A1 1 0 004.343 5.757l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"/></svg>
+                    <span id="generate-seo-label">Generate SEO info</span>
+                </button>
             </header>
             <div class="p-5 space-y-5">
+                <div id="generate-seo-error" class="hidden rounded-md bg-red-50 border border-red-200 text-red-800 px-3 py-2 text-sm"></div>
                 <div>
                     <label for="seo_title" class="{{ $labelClass }}">SEO title <span class="text-slate-400 font-normal">(50-60 chars ideal)</span></label>
                     <input id="seo_title" name="seo_title" type="text" maxlength="160"
@@ -302,7 +318,7 @@
     // Summernote init
     const $desc = jQuery('#description');
     $desc.summernote({
-        placeholder: 'Write the article body…',
+        placeholder: 'Write the article body, or click Generate description to draft one…',
         tabsize: 2,
         height: 360,
         styleTags: ['p', 'blockquote', 'h3', 'h4'],
@@ -398,6 +414,83 @@
         setStatus('description', descText.length >= 80 ? 'ok' : (descText.length > 0 ? 'warn' : 'pending'));
     }
     updateSeoHealth();
+
+    // AI helpers
+    async function callAi(url, payload, button, label, errBox) {
+        const original = label.textContent;
+        button.disabled = true;
+        label.textContent = 'Generating…';
+        errBox.classList.add('hidden');
+        try {
+            const res = await fetch(url, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrf,
+                },
+                body: JSON.stringify(payload),
+            });
+            const json = await res.json();
+            if (!res.ok) throw new Error(json.detail || json.error || 'Request failed ('+res.status+')');
+            return json;
+        } catch (e) {
+            errBox.textContent = 'AI generation failed: ' + (e.message || e);
+            errBox.classList.remove('hidden');
+            return null;
+        } finally {
+            button.disabled = false;
+            label.textContent = original;
+        }
+    }
+
+    function requireTitle(errBox) {
+        const t = (document.getElementById('title').value || '').trim();
+        if (!t) {
+            errBox.textContent = 'Enter a title first.';
+            errBox.classList.remove('hidden');
+            document.getElementById('title').focus();
+            return null;
+        }
+        return t;
+    }
+
+    const seoBtn = document.getElementById('generate-seo-btn');
+    const seoLabel = document.getElementById('generate-seo-label');
+    const seoErr = document.getElementById('generate-seo-error');
+    seoBtn.addEventListener('click', async function () {
+        const title = requireTitle(seoErr);
+        if (!title) return;
+        const json = await callAi('{{ route('admin.blogs.generate-seo') }}', {
+            title,
+            category: (document.getElementById('category').value || '').trim(),
+            context: ($desc.summernote('code') || '').replace(/<[^>]+>/g,' ').trim().slice(0, 800),
+        }, seoBtn, seoLabel, seoErr);
+        if (!json) return;
+        if (json.seo_title) document.getElementById('seo_title').value = json.seo_title;
+        if (json.summary) document.getElementById('summary').value = json.summary;
+        if (json.seo_keywords) document.getElementById('seo_keywords').value = json.seo_keywords;
+        ['seo_title','summary','seo_keywords'].forEach(id => document.getElementById(id).dispatchEvent(new Event('input')));
+    });
+
+    const descBtn = document.getElementById('generate-description-btn');
+    const descLabel = document.getElementById('generate-description-label');
+    const descErr = document.getElementById('generate-description-error');
+    descBtn.addEventListener('click', async function () {
+        const title = requireTitle(descErr);
+        if (!title) return;
+        const json = await callAi('{{ route('admin.blogs.generate-description') }}', {
+            title,
+            category: (document.getElementById('category').value || '').trim(),
+            summary: (document.getElementById('summary').value || '').trim(),
+        }, descBtn, descLabel, descErr);
+        if (!json) return;
+        if (json.description) {
+            $desc.summernote('code', json.description);
+            updateSeoHealth();
+        }
+    });
 })();
 </script>
 @endpush
