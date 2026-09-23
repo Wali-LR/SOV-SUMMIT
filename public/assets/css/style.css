@@ -3327,11 +3327,22 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
 
 .event-detail__body { padding: clamp(3rem, 6vw, 5rem) 0; }
 .event-detail__prose {
-    max-width: 72ch;
+    max-width: none;
     margin: 0;
+}
+/* Neutralise inline styles copied in via Summernote paste
+   (font-family / font-size / color from source pages) so
+   article typography stays consistent. */
+.event-detail__prose span,
+.event-detail__prose font {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    color: inherit !important;
+    background: transparent !important;
 }
 .event-detail__prose p {
     margin: 0 0 1.15rem;
+    max-width: none;
     color: var(--ink-soft);
     font-size: 1.05rem;
     line-height: 1.75;
@@ -3859,9 +3870,20 @@ section.tight { padding: clamp(2.2rem, 4vw, 3.5rem) 0; }
 }
 
 .blog-detail__body { padding: clamp(3rem, 6vw, 5rem) 0; }
-.blog-detail__prose { max-width: 72ch; margin: 0; }
+.blog-detail__prose { max-width: none; margin: 0; }
+/* Neutralise inline styles copied in via Summernote paste
+   (font-family / font-size / color from source pages) so
+   article typography stays consistent. */
+.blog-detail__prose span,
+.blog-detail__prose font {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    color: inherit !important;
+    background: transparent !important;
+}
 .blog-detail__prose p {
     margin: 0 0 1.15rem;
+    max-width: none;
     color: var(--ink-soft);
     font-size: 1.05rem;
     line-height: 1.75;

@@ -325,8 +325,44 @@
                     uploadInlineImage(files[i]);
                 }
             },
+            onPaste: function (e) {
+                const ev = e.originalEvent || e;
+                const cb = ev.clipboardData || window.clipboardData;
+                if (!cb) return;
+                e.preventDefault();
+                const html = cb.getData('text/html');
+                const text = cb.getData('text/plain') || '';
+                if (html) {
+                    $desc.summernote('pasteHTML', sanitizePastedHtml(html));
+                } else {
+                    const safe = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+                    $desc.summernote('pasteHTML', '<p>' + safe.replace(/\r?\n\r?\n+/g,'</p><p>').replace(/\r?\n/g,'<br>') + '</p>');
+                }
+            },
         },
     });
+
+    function sanitizePastedHtml(html) {
+        const allowedTags = new Set(['P','BR','STRONG','B','EM','I','U','H3','H4','UL','OL','LI','BLOCKQUOTE','A']);
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = html;
+        (function walk(node) {
+            const children = Array.from(node.childNodes);
+            children.forEach(walk);
+            if (node.nodeType !== 1) return;
+            const tag = node.tagName;
+            if (!allowedTags.has(tag)) {
+                while (node.firstChild) node.parentNode.insertBefore(node.firstChild, node);
+                node.parentNode.removeChild(node);
+                return;
+            }
+            for (const attr of Array.from(node.attributes)) {
+                if (tag === 'A' && (attr.name === 'href' || attr.name === 'title')) continue;
+                node.removeAttribute(attr.name);
+            }
+        })(wrapper);
+        return wrapper.innerHTML;
+    }
 
     function showToast(message, ok = true) {
         const t = document.createElement('div');

@@ -46,11 +46,17 @@
     color: var(--ink-soft);
     line-height: 1.75;
     font-size: 1.02rem;
+    max-width: none;
 }
 .cs__body.prose > * + * { margin-top: 0.9rem; }
+.cs__body.prose p,
+.cs__body.prose ul,
+.cs__body.prose ol,
+.cs__body.prose blockquote { max-width: none; }
 .cs__body.prose h2, .cs__body.prose h3 {
     font-family: var(--font-serif); font-weight: 500;
     color: var(--ink); margin-top: 1.5rem;
+    max-width: none;
 }
 .cs__body.prose ul, .cs__body.prose ol { padding-left: 1.4rem; }
 .cs__body.prose li { margin: 0.35rem 0; }

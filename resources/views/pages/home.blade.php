@@ -411,19 +411,6 @@
         <p>We coordinate and monitor the delivery of services throughout the event, helping ensure everything happens as planned.</p>
         <span class="help-card__meta">On-ground oversight</span>
       </li>
-
-      <li class="help-card" tabindex="0">
-        <div class="help-card__accent" aria-hidden="true"></div>
-        <span class="help-card__num" aria-hidden="true">05</span>
-        <span class="help-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 3l3.4 6.9 7.6 1.1-5.5 5.4 1.3 7.6L16 20.4l-6.8 3.6 1.3-7.6L5 11l7.6-1.1z"/>
-          </svg>
-        </span>
-        <h3>Guaranteed Service Quality</h3>
-        <p>Our service commitment includes quality control and, where contractually agreed, a money-back guarantee for qualifying service failures.</p>
-        <span class="help-card__meta">Money-back guarantee</span>
-      </li>
     </ul>
   </div>
 </section>
