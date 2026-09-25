@@ -48,6 +48,12 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
                     Events
                 </a>
+                @php $isServices = request()->routeIs('admin.services.*'); @endphp
+                <a href="{{ route('admin.services.index') }}"
+                   class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium mb-1 {{ $isServices ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm10 4a2 2 0 012-2h.01a2 2 0 010 4H16a2 2 0 01-2-2zm-2 8a2 2 0 012-2h4a2 2 0 010 4h-4a2 2 0 01-2-2z" clip-rule="evenodd"/></svg>
+                    Services
+                </a>
                 @php $isBlogs = request()->routeIs('admin.blogs.*'); @endphp
                 <a href="{{ route('admin.blogs.index') }}"
                    class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium mb-1 {{ $isBlogs ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100' }}">

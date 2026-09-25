@@ -6,9 +6,11 @@ use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\MediaUploadController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SeoGeneratorController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,15 +28,9 @@ Route::get('/', function () {
     return view('pages.home', compact('featuredEvents', 'latestPosts'));
 })->name('home');
 Route::view('/about',                           'pages.about')->name('about');
-Route::view('/services',                        'pages.services.index')->name('services');
-Route::view('/services/planning-coordination',  'pages.services.planning-coordination');
-Route::view('/services/conference-planning',    'pages.services.conference-planning');
-Route::view('/services/delegation-management',  'pages.services.delegation-management');
-Route::view('/services/events-productions',     'pages.services.events-productions');
-Route::view('/services/security-coordination',  'pages.services.security-coordination');
-Route::view('/services/media-coverage',         'pages.services.media-coverage');
-Route::view('/services/travel-experiences',     'pages.services.travel-experiences');
-Route::view('/management-training',             'pages.management-training');
+Route::get('/services',                         [ServiceController::class, 'index'])->name('services.index');
+Route::get('/management-training',              [ServiceController::class, 'managementTraining'])->name('services.management-training');
+Route::get('/services/{service:slug}',          [ServiceController::class, 'show'])->name('services.show');
 Route::view('/products',                        'pages.products');
 Route::get('/events',                           [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event:slug}',              [EventController::class, 'show'])->name('events.show');
@@ -61,9 +57,12 @@ Route::middleware('auth')->group(function () {
         Route::post('events/generate-description', [SeoGeneratorController::class, 'description'])->name('events.generate-description');
         Route::post('blogs/generate-seo', [SeoGeneratorController::class, 'blogSeo'])->name('blogs.generate-seo');
         Route::post('blogs/generate-description', [SeoGeneratorController::class, 'blogDescription'])->name('blogs.generate-description');
+        Route::post('services/generate-seo', [SeoGeneratorController::class, 'serviceSeo'])->name('services.generate-seo');
+        Route::post('services/generate-description', [SeoGeneratorController::class, 'serviceDescription'])->name('services.generate-description');
         Route::post('media/upload', MediaUploadController::class)->name('media.upload');
         Route::resource('events', AdminEventController::class)->except(['show']);
         Route::resource('blogs', AdminBlogController::class)->except(['show']);
+        Route::resource('services', AdminServiceController::class)->except(['show']);
         Route::resource('comment-categories', CommentCategoryController::class)
             ->parameters(['comment-categories' => 'comment_category'])
             ->except(['show']);

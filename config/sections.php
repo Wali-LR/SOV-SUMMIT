@@ -4,6 +4,7 @@ return [
     'sectionable_types' => [
         \App\Models\Event::class,
         \App\Models\Blog::class,
+        \App\Models\Service::class,
     ],
 
     'types' => [

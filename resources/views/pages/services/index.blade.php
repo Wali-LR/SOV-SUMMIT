@@ -2,11 +2,24 @@
 
 @section('title', 'Event Organisation, Delegations & Travel Coordination | SOV SUMMIT')
 @section('meta_description', 'Explore SOV SUMMIT services, including event planning, conference organisation, delegation management, management training, travel coordination, security support, and media coverage.')
-@section('canonical', 'https://sov-summit.com/services/')
+@section('canonical', url()->to('/services'))
 
 @push('head')
-<script type="application/ld+json">{!! '{"@context": "https://schema.org", "@type": "Organization", "name": "SOV SUMMIT", "legalName": "Sovereign Summit GmbH", "url": "https://sov-summit.com/", "logo": "https://sov-summit.com/assets/img/logo.webp", "email": "info@sov-summit.com", "address": {"@type": "PostalAddress", "streetAddress": "Bahnhofstrasse 21", "addressLocality": "Zug", "postalCode": "6300", "addressCountry": "CH"}, "slogan": "People. Ideas. Impact."}' !!}</script>
-<script type="application/ld+json">{!! '{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sov-summit.com/"}, {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://sov-summit.com/services/"}]}' !!}</script>
+<script type="application/ld+json">{!! json_encode([
+    '@context' => 'https://schema.org', '@type' => 'Organization',
+    'name' => 'SOV SUMMIT', 'legalName' => 'Sovereign Summit GmbH',
+    'url' => 'https://sov-summit.com/', 'logo' => 'https://sov-summit.com/assets/img/logo.webp',
+    'email' => 'info@sov-summit.com',
+    'address' => ['@type' => 'PostalAddress', 'streetAddress' => 'Bahnhofstrasse 21', 'addressLocality' => 'Zug', 'postalCode' => '6300', 'addressCountry' => 'CH'],
+    'slogan' => 'People. Ideas. Impact.',
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+<script type="application/ld+json">{!! json_encode([
+    '@context' => 'https://schema.org', '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home',     'item' => url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Services', 'item' => url('/services')],
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 @endpush
 
 @section('breadcrumb')
@@ -24,93 +37,22 @@
 
 <section class="services alt" aria-labelledby="services-heading"><div class="container">
 <div class="services__grid">
-  <a class="service-card" href="/services/planning-coordination" aria-label="Explore Planning &amp; Coordination">
-    <div class="service-card__media">
-      <img src="{{ asset('assets/img/services/planning.webp') }}" alt="Grand venue prepared for an international programme" loading="lazy" width="600" height="400">
-    </div>
-    <div class="service-card__body">
-      <h3>Planning &amp; Coordination</h3>
-      <p>Programme planning, supplier coordination, venue sourcing, guest management, schedules, logistics, and delivery support.</p>
-      <span class="service-card__cta">Learn more <span aria-hidden="true">&rarr;</span></span>
-    </div>
-  </a>
-
-  <a class="service-card" href="/management-training" aria-label="Explore Management Training Programmes">
-    <div class="service-card__media">
-      <img src="{{ asset('assets/img/services/management-training.webp') }}" alt="Executive management training session in a wood-panelled hall" loading="lazy" width="600" height="400">
-    </div>
-    <div class="service-card__body">
-      <h3>Management Training Programmes</h3>
-      <p>Leadership development, executive learning, team development, communication, negotiation, and bespoke training programmes.</p>
-      <span class="service-card__cta">Learn more <span aria-hidden="true">&rarr;</span></span>
-    </div>
-  </a>
-
-  <a class="service-card" href="/services/conference-planning" aria-label="Explore Conference Planning">
-    <div class="service-card__media">
-      <img src="{{ asset('assets/img/services/conferences.webp') }}" alt="International diplomatic conference with delegates and flags" loading="lazy" width="600" height="400">
-    </div>
-    <div class="service-card__body">
-      <h3>Conference Planning</h3>
-      <p>International conferences, executive forums, institutional meetings, workshops, seminars, and professional event delivery.</p>
-      <span class="service-card__cta">Learn more <span aria-hidden="true">&rarr;</span></span>
-    </div>
-  </a>
-
-  <a class="service-card" href="/services/delegation-management" aria-label="Explore Delegation Management">
-    <div class="service-card__media">
-      <img src="{{ asset('assets/img/services/delegation.webp') }}" alt="Official delegation arriving at an international meeting" loading="lazy" width="600" height="400">
-    </div>
-    <div class="service-card__body">
-      <h3>Delegation Management</h3>
-      <p>Government, institutional, corporate, and executive delegations, including travel, accommodation, transportation, protocol, and site visits.</p>
-      <span class="service-card__cta">Learn more <span aria-hidden="true">&rarr;</span></span>
-    </div>
-  </a>
-
-  <a class="service-card" href="/services/events-productions" aria-label="Explore Events &amp; Productions">
-    <div class="service-card__media">
-      <img src="{{ asset('assets/img/services/events.webp') }}" alt="Elegant chandelier-lit gala reception" loading="lazy" width="600" height="400">
-    </div>
-    <div class="service-card__body">
-      <h3>Events &amp; Productions</h3>
-      <p>Concerts, film festivals, fashion shows, road shows, corporate celebrations, corporate events, and private productions.</p>
-      <span class="service-card__cta">Learn more <span aria-hidden="true">&rarr;</span></span>
-    </div>
-  </a>
-
-  <a class="service-card" href="/services/security-coordination" aria-label="Explore Security Coordination">
-    <div class="service-card__media">
-      <img src="{{ asset('assets/img/services/security.webp') }}" alt="VIP protection detail escorting a client to a black SUV" loading="lazy" width="600" height="400">
-    </div>
-    <div class="service-card__body">
-      <h3>Security Coordination</h3>
-      <p>Coordination with suitable licensed security providers for events, travel, delegations, and executive requirements.</p>
-      <span class="service-card__cta">Learn more <span aria-hidden="true">&rarr;</span></span>
-    </div>
-  </a>
-
-  <a class="service-card" href="/services/media-coverage" aria-label="Explore Media Coverage">
-    <div class="service-card__media">
-      <img src="{{ asset('assets/img/services/media.webp') }}" alt="Photographers and press covering an international event" loading="lazy" width="600" height="400">
-    </div>
-    <div class="service-card__body">
-      <h3>Media Coverage</h3>
-      <p>Event photography, video production, documentation, press coordination, and post-event content.</p>
-      <span class="service-card__cta">Learn more <span aria-hidden="true">&rarr;</span></span>
-    </div>
-  </a>
-
-  <a class="service-card" href="/services/travel-experiences" aria-label="Explore Travel &amp; Experiences">
-    <div class="service-card__media">
-      <img src="{{ asset('assets/img/services/travel.webp') }}" alt="Private aviation coordination and luxury travel experience" loading="lazy" width="600" height="400">
-    </div>
-    <div class="service-card__body">
-      <h3>Travel &amp; Experiences</h3>
-      <p>Private aviation coordination, accommodation, chauffeur transportation, family trips, restaurants, activities, and complete travel planning.</p>
-      <span class="service-card__cta">Learn more <span aria-hidden="true">&rarr;</span></span>
-    </div>
-  </a>
+  @foreach ($services as $service)
+    <a class="service-card" href="{{ $service->publicUrl() }}" aria-label="Explore {{ $service->title }}">
+      <div class="service-card__media">
+        @if ($service->hero_url)
+          <img src="{{ $service->hero_url }}" alt="{{ $service->title }}" loading="lazy" width="600" height="400">
+        @endif
+      </div>
+      <div class="service-card__body">
+        <h3>{{ $service->title }}</h3>
+        @if ($service->summary)
+          <p>{{ \Illuminate\Support\Str::limit($service->summary, 180) }}</p>
+        @endif
+        <span class="service-card__cta">Learn more <span aria-hidden="true">&rarr;</span></span>
+      </div>
+    </a>
+  @endforeach
 </div>
 </div></section>
 

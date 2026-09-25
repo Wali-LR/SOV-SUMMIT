@@ -113,6 +113,58 @@ class SeoGeneratorController extends Controller
         ]);
     }
 
+    public function serviceSeo(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'title'   => ['required', 'string', 'max:255'],
+            'eyebrow' => ['nullable', 'string', 'max:255'],
+            'context' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        $prompt = $this->serviceSeoPrompt($data['title'], $data['eyebrow'] ?? null, $data['context'] ?? null);
+
+        $result = $this->callOpenAi(
+            system: 'You are an SEO copy assistant for SOV SUMMIT, a Swiss international event and delegation coordination company. You are writing metadata for a service page. Write in British English, executive tone, no hype. Respond ONLY with valid minified JSON matching the requested schema. Never include markdown, code fences, or commentary.',
+            user: $prompt,
+            maxTokens: (int) config('services.openai.max_tokens'),
+        );
+
+        if ($result['ok'] === false) {
+            return response()->json($result['payload'], $result['status']);
+        }
+
+        return response()->json([
+            'seo_title'    => trim((string) ($result['data']['seo_title'] ?? '')),
+            'summary'      => trim((string) ($result['data']['summary'] ?? $result['data']['description'] ?? '')),
+            'seo_keywords' => trim((string) ($result['data']['seo_keywords'] ?? $result['data']['keywords'] ?? '')),
+        ]);
+    }
+
+    public function serviceDescription(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'title'   => ['required', 'string', 'max:255'],
+            'eyebrow' => ['nullable', 'string', 'max:255'],
+            'summary' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        $prompt = $this->serviceDescriptionPrompt($data['title'], $data['eyebrow'] ?? null, $data['summary'] ?? null);
+
+        $result = $this->callOpenAi(
+            system: 'You are a senior copywriter for SOV SUMMIT, a Swiss international event and delegation coordination company. You are drafting the long-form body of a service page. Write in British English with an executive, restrained, precise voice — no hype, no exclamation marks, no emojis. Return ONLY valid minified JSON — never markdown or commentary. The "description" field must be well-formed HTML using <h3>, <p>, <strong>, <em>, <ul>, <ol>, <li>, <br>. Do not include headings above <h3>, links, images, or inline styles. Speak about what SOV SUMMIT coordinates for this service (providers, logistics, protocol, etc.) without fabricating specific prices, named clients, or partner organisations.',
+            user: $prompt,
+            maxTokens: 1600,
+        );
+
+        if ($result['ok'] === false) {
+            return response()->json($result['payload'], $result['status']);
+        }
+
+        return response()->json([
+            'description' => trim((string) ($result['data']['description'] ?? '')),
+        ]);
+    }
+
     private function seoPrompt(string $title, ?string $location, ?string $context): string
     {
         $lines = [
@@ -192,6 +244,47 @@ class SeoGeneratorController extends Controller
         $lines[] = '  4) <h3>How SOV SUMMIT approaches this</h3> followed by 1-2 <p> paragraphs on the coordination angle (venue, hospitality, logistics, security, protocol, media, transport — whichever fits).';
         $lines[] = '  5) Closing <p> (1-2 sentences): invite qualified enquiries without hard sell.';
         $lines[] = 'Rules: use only <h3>, <p>, <strong>, <em>, <ul>, <ol>, <li>, <br>. No inline styles, no links, no headings above <h3>, no emojis, no exclamation marks. Do not fabricate specific dates, prices, speaker names, partner names, statistics, or attendee numbers.';
+        return implode("\n", $lines);
+    }
+
+    private function serviceSeoPrompt(string $title, ?string $eyebrow, ?string $context): string
+    {
+        $lines = [
+            'Write SEO metadata for a service page titled: "'.$title.'".',
+        ];
+        if ($eyebrow) {
+            $lines[] = 'Service category: '.$eyebrow.'.';
+        }
+        if ($context) {
+            $lines[] = 'Additional context: '.$context;
+        }
+        $lines[] = 'Return JSON with exactly these fields:';
+        $lines[] = '- "seo_title": SEO page title, STRICT 50 to 60 characters. Count carefully. Do NOT exceed 60 characters. Do NOT append brand names or pipe separators.';
+        $lines[] = '- "summary": meta description, ONE sentence, 130-155 characters, describing what SOV SUMMIT coordinates for this service.';
+        $lines[] = '- "seo_keywords": 6-10 relevant keywords/phrases, comma-separated, lowercase, no hashtags.';
+        $lines[] = 'Before returning, silently count the characters of seo_title and shorten it if it exceeds 60.';
+        return implode("\n", $lines);
+    }
+
+    private function serviceDescriptionPrompt(string $title, ?string $eyebrow, ?string $summary): string
+    {
+        $lines = [
+            'Write a long-form HTML body for a service page titled: "'.$title.'".',
+        ];
+        if ($eyebrow) {
+            $lines[] = 'Service category: '.$eyebrow.'.';
+        }
+        if ($summary) {
+            $lines[] = 'Editor summary: '.$summary;
+        }
+        $lines[] = 'Return JSON with exactly this field:';
+        $lines[] = '- "description": HTML body, roughly 1500-2000 characters of rendered text (about 240-320 words). Structure it as:';
+        $lines[] = '  1) Opening <p> (2-3 sentences): what the service is, who it is for, why it matters.';
+        $lines[] = '  2) <h3>What we coordinate</h3> followed by 1-2 <p> paragraphs on the operational scope SOV SUMMIT delivers (providers, logistics, hospitality, security, protocol, media, transport — whichever fits).';
+        $lines[] = '  3) <h3>How we work</h3> followed by 1-2 <p> paragraphs on the approach (briefing, sourcing, coordination, on-site delivery).';
+        $lines[] = '  4) <h3>Typical requirements</h3> followed by a <ul> with 4-6 <li> bullets naming concrete deliverables or scenarios.';
+        $lines[] = '  5) Closing <p> (1-2 sentences): invite qualified enquiries without hard sell.';
+        $lines[] = 'Rules: use only <h3>, <p>, <strong>, <em>, <ul>, <ol>, <li>, <br>. No inline styles, no links, no headings above <h3>, no emojis, no exclamation marks. Do not fabricate specific prices, named clients, or partner organisations.';
         return implode("\n", $lines);
     }
 
