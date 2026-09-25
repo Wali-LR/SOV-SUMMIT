@@ -150,17 +150,6 @@
     </div></section>
   @endif
 
-  @if (!empty($service->suitable_for))
-    <section class="alt"><div class="container">
-      <div class="section-head wide"><h2>{{ $service->suitable_for_label ?: 'Suitable for' }}</h2></div>
-      <ul class="check-list">
-        @foreach ($service->suitable_for as $item)
-          <li>{{ $item }}</li>
-        @endforeach
-      </ul>
-    </div></section>
-  @endif
-
   @if (!empty($service->faqs))
     <section class="alt"><div class="container">
       <div class="section-head wide"><h2>Frequently asked</h2></div>

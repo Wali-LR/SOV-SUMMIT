@@ -121,27 +121,6 @@
             </div>
         </section>
 
-        {{-- Section: Suitable for --}}
-        <section class="bg-white border border-slate-200 rounded-lg">
-            <header class="px-5 py-4 border-b border-slate-100">
-                <h3 class="text-sm font-semibold text-slate-900">Secondary checklist <span class="text-slate-400 font-normal">(optional)</span></h3>
-                <p class="text-xs text-slate-500 mt-0.5">Use for &ldquo;Suitable for&rdquo;, &ldquo;Programme formats&rdquo;, etc.</p>
-            </header>
-            <div class="p-5 grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div>
-                    <label for="suitable_for_label" class="{{ $labelClass }}">Section heading</label>
-                    <input id="suitable_for_label" name="suitable_for_label" type="text" maxlength="120"
-                           value="{{ old('suitable_for_label', $service->suitable_for_label) }}"
-                           placeholder="e.g. Suitable for"
-                           class="{{ $inputClass }}">
-                </div>
-                <div class="md:col-span-2">
-                    <label for="suitable_for" class="{{ $labelClass }}">Items <span class="text-slate-400 font-normal">(one per line)</span></label>
-                    <textarea id="suitable_for" name="suitable_for" rows="6" class="{{ $inputClass }} font-mono text-xs">{{ old('suitable_for', is_array($service->suitable_for) ? implode("\n", $service->suitable_for) : '') }}</textarea>
-                </div>
-            </div>
-        </section>
-
         {{-- Section: FAQ repeater --}}
         <section class="bg-white border border-slate-200 rounded-lg">
             <header class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
