@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CommentCategoryController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MediaUploadController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\SectionController;
@@ -66,6 +68,14 @@ Route::middleware('auth')->group(function () {
         Route::resource('blogs', AdminBlogController::class)->except(['show']);
         Route::resource('services', AdminServiceController::class)->except(['show']);
         Route::resource('pages', AdminPageController::class)->except(['show']);
+        Route::get ('customers/search', [CustomerController::class, 'search'])->name('customers.search');
+        Route::post('customers',        [CustomerController::class, 'store'])->name('customers.store');
+
+        Route::get  ('invoices/{invoice}/pdf',     [InvoiceController::class, 'pdf'])->name('invoices.pdf');
+        Route::get  ('invoices/{invoice}/preview', [InvoiceController::class, 'preview'])->name('invoices.preview');
+        Route::post ('invoices/{invoice}/send',    [InvoiceController::class, 'send'])->name('invoices.send');
+        Route::patch('invoices/{invoice}/status',  [InvoiceController::class, 'status'])->name('invoices.status');
+        Route::resource('invoices', InvoiceController::class);
         Route::resource('comment-categories', CommentCategoryController::class)
             ->parameters(['comment-categories' => 'comment_category'])
             ->except(['show']);

@@ -67,6 +67,14 @@
                     Dynamic Page
                 </a>
 
+                <div class="px-2 pt-6 pb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">Billing</div>
+                @php $isInvoices = request()->routeIs('admin.invoices.*'); @endphp
+                <a href="{{ route('admin.invoices.index') }}"
+                   class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium mb-1 {{ $isInvoices ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v14l3.5-2 3.5 2 3.5-2 3.5 2V4a2 2 0 00-2-2H5zm2.5 3a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm6.207.293a1 1 0 00-1.414 0l-6 6a1 1 0 101.414 1.414l6-6a1 1 0 000-1.414zM12.5 10a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clip-rule="evenodd"/></svg>
+                    Invoices
+                </a>
+
                 <div class="px-2 pt-6 pb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">Others</div>
                 @php $isCommentCats = request()->routeIs('admin.comment-categories.*'); @endphp
                 <a href="{{ route('admin.comment-categories.index') }}"
