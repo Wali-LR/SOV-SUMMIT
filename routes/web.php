@@ -4,11 +4,13 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CommentCategoryController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\MediaUploadController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SeoGeneratorController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('events', AdminEventController::class)->except(['show']);
         Route::resource('blogs', AdminBlogController::class)->except(['show']);
         Route::resource('services', AdminServiceController::class)->except(['show']);
+        Route::resource('pages', AdminPageController::class)->except(['show']);
         Route::resource('comment-categories', CommentCategoryController::class)
             ->parameters(['comment-categories' => 'comment_category'])
             ->except(['show']);
@@ -77,3 +80,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Dynamic page catch-all. MUST stay at the bottom so specific routes above win.
+Route::get('/{slug}', [PageController::class, 'show'])
+    ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')
+    ->name('pages.show');

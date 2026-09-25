@@ -60,6 +60,12 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 4a1 1 0 000 2h6a1 1 0 100-2H7zm-1 5a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h4a1 1 0 100-2H7z"/></svg>
                     Blog
                 </a>
+                @php $isPages = request()->routeIs('admin.pages.*'); @endphp
+                <a href="{{ route('admin.pages.index') }}"
+                   class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium mb-1 {{ $isPages ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm5 4V3.5L14.5 9H10a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+                    Dynamic Page
+                </a>
 
                 <div class="px-2 pt-6 pb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">Others</div>
                 @php $isCommentCats = request()->routeIs('admin.comment-categories.*'); @endphp

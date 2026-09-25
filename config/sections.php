@@ -5,6 +5,7 @@ return [
         \App\Models\Event::class,
         \App\Models\Blog::class,
         \App\Models\Service::class,
+        \App\Models\Page::class,
     ],
 
     'types' => [

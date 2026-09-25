@@ -3,6 +3,11 @@
         ['label' => 'Home',     'href' => '/',        'match' => '/'],
         ['label' => 'About',    'href' => '/about',   'match' => 'about*'],
     ];
+
+    $dynamicNavPages = \App\Models\Page::query()
+        ->published()->inNav()
+        ->get(['slug', 'title', 'nav_label']);
+
     $servicesLinks = [
         ['label' => 'Planning & Coordination',  'href' => '/services/planning-coordination'],
         ['label' => 'Conference Planning',      'href' => '/services/conference-planning'],
@@ -44,6 +49,10 @@
         @foreach ($tailItems as $item)
           @php $isActive = request()->is($item['match']); @endphp
           <li><a href="{{ $item['href'] }}" @if($isActive) aria-current="page" @endif>{{ $item['label'] }}</a></li>
+        @endforeach
+        @foreach ($dynamicNavPages as $p)
+          @php $isActive = request()->is($p->slug); @endphp
+          <li><a href="/{{ $p->slug }}" @if($isActive) aria-current="page" @endif>{{ $p->nav_label ?: $p->title }}</a></li>
         @endforeach
       </ul>
       <a class="nav-cta" href="/contact">
