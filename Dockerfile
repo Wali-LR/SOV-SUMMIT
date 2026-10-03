@@ -100,7 +100,8 @@ COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 # Configure directory permissions and make entrypoint executable
 RUN chmod +x /usr/local/bin/entrypoint.sh \
     && mkdir -p /var/log/supervisor /var/run /run/nginx \
-    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/log/nginx /var/lib/nginx /run/nginx /var/log/supervisor
+    && chown -R www-data:www-data /var/www/html /var/log/nginx /var/lib/nginx /run/nginx /var/log/supervisor \
+    && chmod -R 755 /var/www/html/public
 
 # Expose web server port
 EXPOSE 80
