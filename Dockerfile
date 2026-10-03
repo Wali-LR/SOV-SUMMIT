@@ -24,7 +24,7 @@ RUN npm run build
 # ==============================================================================
 # Stage 2: Production PHP-FPM + Nginx Application
 # ==============================================================================
-FROM php:8.3-fpm-alpine AS production
+FROM php:8.4-fpm-alpine AS production
 
 LABEL maintainer="SOV Summit Team"
 LABEL description="Production image for SOV-SUMMIT Laravel application on Dokploy"
@@ -76,7 +76,8 @@ RUN composer install \
     --no-interaction \
     --prefer-dist \
     --no-autoloader \
-    --no-scripts
+    --no-scripts \
+    --ignore-platform-req=php+
 
 # Copy application source code
 COPY . .
