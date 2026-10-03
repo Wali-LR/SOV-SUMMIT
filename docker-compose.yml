@@ -1,0 +1,210 @@
+services:
+  # ==============================================================================
+  # Laravel Web Application (Nginx + PHP-FPM)
+  # ==============================================================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:80"
+    environment:
+      APP_NAME: "${APP_NAME:-SOV Summit}"
+      APP_ENV: "${APP_ENV:-production}"
+      APP_KEY: "${APP_KEY}"
+      APP_DEBUG: "${APP_DEBUG:-false}"
+      APP_URL: "${APP_URL:-http://localhost}"
+      
+      # Database
+      DB_CONNECTION: "${DB_CONNECTION:-mysql}"
+      DB_HOST: "${DB_HOST:-db}"
+      DB_PORT: "${DB_PORT:-3306}"
+      DB_DATABASE: "${DB_DATABASE:-sov_summit}"
+      DB_USERNAME: "${DB_USERNAME:-sov_user}"
+      DB_PASSWORD: "${DB_PASSWORD:-sov_secret}"
+
+      # Cache, Sessions & Queue
+      CACHE_STORE: "${CACHE_STORE:-redis}"
+      SESSION_DRIVER: "${SESSION_DRIVER:-redis}"
+      QUEUE_CONNECTION: "${QUEUE_CONNECTION:-redis}"
+      REDIS_CLIENT: "${REDIS_CLIENT:-phpredis}"
+      REDIS_HOST: "${REDIS_HOST:-redis}"
+      REDIS_PASSWORD: "${REDIS_PASSWORD:-redis_secret}"
+      REDIS_PORT: "${REDIS_PORT:-6379}"
+
+      # Filesystem & Logging
+      FILESYSTEM_DISK: "${FILESYSTEM_DISK:-local}"
+      LOG_CHANNEL: "${LOG_CHANNEL:-stack}"
+      LOG_LEVEL: "${LOG_LEVEL:-error}"
+
+      # Auto run migrations & optimize on boot
+      AUTORUN_MIGRATIONS: "${AUTORUN_MIGRATIONS:-true}"
+      SKIP_OPTIMIZE: "${SKIP_OPTIMIZE:-false}"
+    volumes:
+      - app_storage:/var/www/html/storage
+      - app_bootstrap_cache:/var/www/html/bootstrap/cache
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1/up"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      - sov_network
+      # Uncomment if routing directly through Dokploy Traefik network
+      # - dokploy-network
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.sov-app.rule=Host(`${APP_DOMAIN:-localhost}`)"
+    #   - "traefik.http.routers.sov-app.entrypoints=websecure"
+    #   - "traefik.http.routers.sov-app.tls=true"
+    #   - "traefik.http.routers.sov-app.tls.certresolver=letsencrypt"
+    #   - "traefik.http.services.sov-app.loadbalancer.server.port=80"
+
+  # ==============================================================================
+  # Queue Worker
+  # ==============================================================================
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--max-time=3600"]
+    environment:
+      APP_NAME: "${APP_NAME:-SOV Summit}"
+      APP_ENV: "${APP_ENV:-production}"
+      APP_KEY: "${APP_KEY}"
+      APP_DEBUG: "${APP_DEBUG:-false}"
+      APP_URL: "${APP_URL:-http://localhost}"
+      DB_CONNECTION: "${DB_CONNECTION:-mysql}"
+      DB_HOST: "${DB_HOST:-db}"
+      DB_PORT: "${DB_PORT:-3306}"
+      DB_DATABASE: "${DB_DATABASE:-sov_summit}"
+      DB_USERNAME: "${DB_USERNAME:-sov_user}"
+      DB_PASSWORD: "${DB_PASSWORD:-sov_secret}"
+      CACHE_STORE: "${CACHE_STORE:-redis}"
+      SESSION_DRIVER: "${SESSION_DRIVER:-redis}"
+      QUEUE_CONNECTION: "${QUEUE_CONNECTION:-redis}"
+      REDIS_CLIENT: "${REDIS_CLIENT:-phpredis}"
+      REDIS_HOST: "${REDIS_HOST:-redis}"
+      REDIS_PASSWORD: "${REDIS_PASSWORD:-redis_secret}"
+      REDIS_PORT: "${REDIS_PORT:-6379}"
+      FILESYSTEM_DISK: "${FILESYSTEM_DISK:-local}"
+      AUTORUN_MIGRATIONS: "false"
+      SKIP_OPTIMIZE: "true"
+    volumes:
+      - app_storage:/var/www/html/storage
+    depends_on:
+      app:
+        condition: service_started
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sov_network
+
+  # ==============================================================================
+  # Laravel Task Scheduler (Cron)
+  # ==============================================================================
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command: ["php", "artisan", "schedule:work"]
+    environment:
+      APP_NAME: "${APP_NAME:-SOV Summit}"
+      APP_ENV: "${APP_ENV:-production}"
+      APP_KEY: "${APP_KEY}"
+      APP_DEBUG: "${APP_DEBUG:-false}"
+      APP_URL: "${APP_URL:-http://localhost}"
+      DB_CONNECTION: "${DB_CONNECTION:-mysql}"
+      DB_HOST: "${DB_HOST:-db}"
+      DB_PORT: "${DB_PORT:-3306}"
+      DB_DATABASE: "${DB_DATABASE:-sov_summit}"
+      DB_USERNAME: "${DB_USERNAME:-sov_user}"
+      DB_PASSWORD: "${DB_PASSWORD:-sov_secret}"
+      CACHE_STORE: "${CACHE_STORE:-redis}"
+      SESSION_DRIVER: "${SESSION_DRIVER:-redis}"
+      QUEUE_CONNECTION: "${QUEUE_CONNECTION:-redis}"
+      REDIS_CLIENT: "${REDIS_CLIENT:-phpredis}"
+      REDIS_HOST: "${REDIS_HOST:-redis}"
+      REDIS_PASSWORD: "${REDIS_PASSWORD:-redis_secret}"
+      REDIS_PORT: "${REDIS_PORT:-6379}"
+      FILESYSTEM_DISK: "${FILESYSTEM_DISK:-local}"
+      AUTORUN_MIGRATIONS: "false"
+      SKIP_OPTIMIZE: "true"
+    volumes:
+      - app_storage:/var/www/html/storage
+    depends_on:
+      app:
+        condition: service_started
+      db:
+        condition: service_healthy
+    networks:
+      - sov_network
+
+  # ==============================================================================
+  # MySQL Database (Optional if using Dokploy's Managed Database)
+  # ==============================================================================
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE:-sov_summit}"
+      MYSQL_USER: "${DB_USERNAME:-sov_user}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-sov_secret}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:-sov_root_secret}"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - sov_network
+
+  # ==============================================================================
+  # Redis Cache & Queue Backend
+  # ==============================================================================
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD:-redis_secret}"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-redis_secret}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - sov_network
+
+# ==============================================================================
+# Persistent Volumes & Networks
+# ==============================================================================
+volumes:
+  app_storage:
+    name: sov_summit_storage
+  app_bootstrap_cache:
+    name: sov_summit_bootstrap_cache
+  db_data:
+    name: sov_summit_db_data
+  redis_data:
+    name: sov_summit_redis_data
+
+networks:
+  sov_network:
+    driver: bridge
+  # dokploy-network:
+  #   external: true
