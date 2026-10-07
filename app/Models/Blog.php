@@ -66,7 +66,11 @@ class Blog extends Model
         if (Str::startsWith($this->cover_image, ['http://', 'https://'])) {
             return $this->cover_image;
         }
-        return Storage::disk('spaces')->url($this->cover_image);
+        try {
+            return Storage::disk('spaces')->url($this->cover_image);
+        } catch (\Throwable $e) {
+            return null;
+        }
     }
 
     public function scopePublished($query)
