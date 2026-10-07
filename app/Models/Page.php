@@ -10,8 +10,8 @@ use Illuminate\Support\Str;
 
 class Page extends Model
 {
-    use HasFactory;
     use HasContentSections;
+    use HasFactory;
 
     protected string $contentSectionPageType = 'page';
 
@@ -42,9 +42,9 @@ class Page extends Model
 
     protected $casts = [
         'is_published' => 'boolean',
-        'show_in_nav'  => 'boolean',
-        'nav_order'    => 'integer',
-        'position'     => 'integer',
+        'show_in_nav' => 'boolean',
+        'nav_order' => 'integer',
+        'position' => 'integer',
         'published_at' => 'datetime',
     ];
 
@@ -69,13 +69,14 @@ class Page extends Model
             $slug = "{$base}-{$i}";
             $i++;
         }
+
         return $slug;
     }
 
     public function getHeroUrlAttribute(): ?string
     {
         $path = $this->hero_image;
-        if (!$path) {
+        if (! $path) {
             return null;
         }
         if (Str::startsWith($path, ['http://', 'https://'])) {
@@ -84,7 +85,11 @@ class Page extends Model
         if (Str::startsWith($path, 'assets/')) {
             return asset($path);
         }
-        return Storage::disk('spaces')->url($path);
+        try {
+            return Storage::disk('spaces')->url($path);
+        } catch (\Throwable) {
+            return asset($path);
+        }
     }
 
     public function scopePublished($query)

@@ -10,8 +10,8 @@ use Illuminate\Support\Str;
 
 class Service extends Model
 {
-    use HasFactory;
     use HasContentSections;
+    use HasFactory;
 
     protected string $contentSectionPageType = 'service';
 
@@ -37,11 +37,11 @@ class Service extends Model
 
     protected $casts = [
         'services_included' => 'array',
-        'suitable_for'      => 'array',
-        'faqs'              => 'array',
-        'is_published'      => 'boolean',
-        'position'          => 'integer',
-        'published_at'      => 'datetime',
+        'suitable_for' => 'array',
+        'faqs' => 'array',
+        'is_published' => 'boolean',
+        'position' => 'integer',
+        'published_at' => 'datetime',
     ];
 
     protected static function booted(): void
@@ -62,13 +62,14 @@ class Service extends Model
             $slug = "{$base}-{$i}";
             $i++;
         }
+
         return $slug;
     }
 
     public function getHeroUrlAttribute(): ?string
     {
         $path = $this->hero_image;
-        if (!$path) {
+        if (! $path) {
             return null;
         }
         if (Str::startsWith($path, ['http://', 'https://'])) {
@@ -77,7 +78,11 @@ class Service extends Model
         if (Str::startsWith($path, 'assets/')) {
             return asset($path);
         }
-        return Storage::disk('spaces')->url($path);
+        try {
+            return Storage::disk('spaces')->url($path);
+        } catch (\Throwable) {
+            return asset($path);
+        }
     }
 
     public function scopePublished($query)
@@ -95,6 +100,7 @@ class Service extends Model
         if ($this->slug === 'management-training') {
             return url('/management-training');
         }
+
         return route('services.show', $this->slug);
     }
 }
