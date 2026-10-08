@@ -1,11 +1,16 @@
 <?php
 
+use App\Models\Blog;
+use App\Models\Event;
+use App\Models\Page;
+use App\Models\Service;
+
 return [
     'sectionable_types' => [
-        \App\Models\Event::class,
-        \App\Models\Blog::class,
-        \App\Models\Service::class,
-        \App\Models\Page::class,
+        Event::class,
+        Blog::class,
+        Service::class,
+        Page::class,
     ],
 
     'types' => [

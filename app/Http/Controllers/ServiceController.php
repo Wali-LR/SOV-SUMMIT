@@ -9,6 +9,7 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Service::published()->ordered()->get();
+
         return view('pages.services.index', compact('services'));
     }
 
@@ -28,6 +29,7 @@ class ServiceController extends Controller
     public function managementTraining()
     {
         $service = Service::published()->where('slug', 'management-training')->firstOrFail();
+
         return $this->show($service);
     }
 }

@@ -10,7 +10,7 @@ class ServiceSeeder extends Seeder
     public function run(): void
     {
         foreach ($this->data() as $i => $row) {
-            $row['position']     = $i;
+            $row['position'] = $i;
             $row['is_published'] = true;
             $row['published_at'] = $row['published_at'] ?? now();
             Service::updateOrCreate(['slug' => $row['slug']], $row);
@@ -21,10 +21,10 @@ class ServiceSeeder extends Seeder
     {
         return [
             [
-                'slug'     => 'planning-coordination',
-                'title'    => 'Planning and coordination for complex programmes',
-                'eyebrow'  => 'PLANNING & COORDINATION',
-                'summary'  => 'Successful programmes require more than individual suppliers. They require a clear plan, reliable communication, and coordination between every moving part. SOV SUMMIT supports clients from the initial brief through to delivery, helping organise the operational structure behind events, delegations, training programmes, and private experiences.',
+                'slug' => 'planning-coordination',
+                'title' => 'Planning and coordination for complex programmes',
+                'eyebrow' => 'PLANNING & COORDINATION',
+                'summary' => 'Successful programmes require more than individual suppliers. They require a clear plan, reliable communication, and coordination between every moving part. SOV SUMMIT supports clients from the initial brief through to delivery, helping organise the operational structure behind events, delegations, training programmes, and private experiences.',
                 'description' => null,
                 'hero_image' => 'assets/img/services/planning.webp',
                 'services_included_label' => 'Services included',
@@ -47,8 +47,8 @@ class ServiceSeeder extends Seeder
             ],
 
             [
-                'slug'    => 'management-training',
-                'title'   => 'Management training designed around your objectives',
+                'slug' => 'management-training',
+                'title' => 'Management training designed around your objectives',
                 'eyebrow' => 'MANAGEMENT TRAINING',
                 'summary' => 'Effective management training should be relevant to the organisation, the participants, and the challenges they face. SOV SUMMIT coordinates bespoke management training programmes that combine learning, professional development, practical exchange, and carefully selected environments.',
                 'description' => null,
@@ -72,8 +72,8 @@ class ServiceSeeder extends Seeder
             ],
 
             [
-                'slug'    => 'conference-planning',
-                'title'   => 'Conference planning with operational precision',
+                'slug' => 'conference-planning',
+                'title' => 'Conference planning with operational precision',
                 'eyebrow' => 'CONFERENCE PLANNING',
                 'summary' => 'Conferences bring together people, information, schedules, venues, technology, hospitality, and expectations. SOV SUMMIT coordinates these elements to create a structured and professional event experience.',
                 'description' => null,
@@ -90,9 +90,9 @@ class ServiceSeeder extends Seeder
                 'suitable_for' => null,
                 'faqs' => [
                     ['q' => 'What does conference planning include?',
-                     'a' => 'Conference planning can include venue sourcing, programme coordination, speaker management, participant logistics, accommodation, transportation, technical production, catering, security coordination, media coverage, and on-site delivery.'],
+                        'a' => 'Conference planning can include venue sourcing, programme coordination, speaker management, participant logistics, accommodation, transportation, technical production, catering, security coordination, media coverage, and on-site delivery.'],
                     ['q' => 'Can SOV SUMMIT coordinate international conferences?',
-                     'a' => 'Yes. SOV SUMMIT can coordinate the relevant providers and operational requirements for international conferences, subject to the destination, scope, availability, and client brief.'],
+                        'a' => 'Yes. SOV SUMMIT can coordinate the relevant providers and operational requirements for international conferences, subject to the destination, scope, availability, and client brief.'],
                 ],
                 'seo_title' => 'Conference Planning & Event Management | SOV SUMMIT',
                 'seo_description' => 'International conference planning, executive forums, institutional meetings, venue sourcing, speakers, hospitality, technical production, and on-site coordination.',
@@ -100,8 +100,8 @@ class ServiceSeeder extends Seeder
             ],
 
             [
-                'slug'    => 'delegation-management',
-                'title'   => 'Delegation management from arrival to departure',
+                'slug' => 'delegation-management',
+                'title' => 'Delegation management from arrival to departure',
                 'eyebrow' => 'DELEGATION MANAGEMENT',
                 'summary' => 'Delegations require accurate schedules, appropriate hospitality, reliable transportation, clear communication, and careful coordination between multiple participants and providers. SOV SUMMIT supports the operational planning of government, institutional, corporate, and executive delegations.',
                 'description' => null,
@@ -121,9 +121,9 @@ class ServiceSeeder extends Seeder
                 ],
                 'faqs' => [
                     ['q' => 'Does SOV SUMMIT manage government and institutional delegations?',
-                     'a' => 'SOV SUMMIT coordinates the operational requirements of government, institutional, corporate, and executive delegations, including travel, accommodation, transportation, schedules, hospitality, site visits, and security coordination.'],
+                        'a' => 'SOV SUMMIT coordinates the operational requirements of government, institutional, corporate, and executive delegations, including travel, accommodation, transportation, schedules, hospitality, site visits, and security coordination.'],
                     ['q' => 'What does delegation management include?',
-                     'a' => 'Delegation management may include participant coordination, aviation, accommodation, ground transportation, protocol, meeting schedules, site visits, hospitality, security coordination, media documentation, and on-site support.'],
+                        'a' => 'Delegation management may include participant coordination, aviation, accommodation, ground transportation, protocol, meeting schedules, site visits, hospitality, security coordination, media documentation, and on-site support.'],
                 ],
                 'seo_title' => 'Delegation Management & International Coordination | SOV SUMMIT',
                 'seo_description' => 'SOV SUMMIT coordinates government, institutional, corporate, and executive delegations, including travel, accommodation, transportation, protocol, security, and site visits.',
@@ -131,8 +131,8 @@ class ServiceSeeder extends Seeder
             ],
 
             [
-                'slug'    => 'events-productions',
-                'title'   => 'Events and productions that connect people',
+                'slug' => 'events-productions',
+                'title' => 'Events and productions that connect people',
                 'eyebrow' => 'EVENTS & PRODUCTIONS',
                 'summary' => 'Every event has its own purpose, audience, atmosphere, and operational requirements. SOV SUMMIT coordinates the providers and details needed to create a coherent and professionally delivered event.',
                 'description' => null,
@@ -151,8 +151,8 @@ class ServiceSeeder extends Seeder
             ],
 
             [
-                'slug'    => 'security-coordination',
-                'title'   => 'Security coordination for people, venues, and programmes',
+                'slug' => 'security-coordination',
+                'title' => 'Security coordination for people, venues, and programmes',
                 'eyebrow' => 'SECURITY COORDINATION',
                 'summary' => 'Security requirements should be considered as part of the overall programme from the beginning. SOV SUMMIT coordinates with suitable licensed security providers according to the destination, event type, participant profile, venue, schedule, and operational requirements.',
                 'description' => null,
@@ -171,9 +171,9 @@ class ServiceSeeder extends Seeder
                 ],
                 'faqs' => [
                     ['q' => 'Does SOV SUMMIT provide security personnel?',
-                     'a' => 'SOV SUMMIT coordinates suitable licensed security providers for events, delegations, travel, and executive programmes. The exact scope depends on local licensing requirements and the assignment.'],
+                        'a' => 'SOV SUMMIT coordinates suitable licensed security providers for events, delegations, travel, and executive programmes. The exact scope depends on local licensing requirements and the assignment.'],
                     ['q' => 'What is security coordination?',
-                     'a' => 'Security coordination is the process of identifying and coordinating appropriate security providers, venue requirements, access procedures, schedules, transportation, and communication for a programme.'],
+                        'a' => 'Security coordination is the process of identifying and coordinating appropriate security providers, venue requirements, access procedures, schedules, transportation, and communication for a programme.'],
                 ],
                 'seo_title' => 'Event Security & Executive Protection Coordination | SOV SUMMIT',
                 'seo_description' => 'SOV SUMMIT coordinates suitable licensed security providers for events, delegations, executive programmes, travel, access management, and VIP requirements.',
@@ -181,8 +181,8 @@ class ServiceSeeder extends Seeder
             ],
 
             [
-                'slug'    => 'media-coverage',
-                'title'   => 'Capture the moments that matter',
+                'slug' => 'media-coverage',
+                'title' => 'Capture the moments that matter',
                 'eyebrow' => 'MEDIA COVERAGE',
                 'summary' => 'Events create important moments, relationships, and messages. Professional documentation helps organisations preserve those moments and communicate their impact after the event has ended. SOV SUMMIT coordinates suitable photographers, videographers, production teams, and media partners according to the purpose and format of the programme.',
                 'description' => null,
@@ -201,9 +201,9 @@ class ServiceSeeder extends Seeder
                 ],
                 'faqs' => [
                     ['q' => 'Does SOV SUMMIT provide event photography?',
-                     'a' => 'SOV SUMMIT coordinates professional photographers, videographers, and media teams for conferences, corporate events, delegations, productions, and private programmes.'],
+                        'a' => 'SOV SUMMIT coordinates professional photographers, videographers, and media teams for conferences, corporate events, delegations, productions, and private programmes.'],
                     ['q' => 'Can SOV SUMMIT arrange video highlights?',
-                     'a' => "Yes. Video production and post-event highlight content can be coordinated with suitable media-production partners according to the programme's objectives."],
+                        'a' => "Yes. Video production and post-event highlight content can be coordinated with suitable media-production partners according to the programme's objectives."],
                 ],
                 'seo_title' => 'Event Photography, Video Production & Media Coverage | SOV SUMMIT',
                 'seo_description' => 'SOV SUMMIT coordinates photographers, videographers, media teams, event documentation, press support, and post-event visual content.',
@@ -211,8 +211,8 @@ class ServiceSeeder extends Seeder
             ],
 
             [
-                'slug'    => 'travel-experiences',
-                'title'   => 'Travel experiences, carefully coordinated',
+                'slug' => 'travel-experiences',
+                'title' => 'Travel experiences, carefully coordinated',
                 'eyebrow' => 'TRAVEL & EXPERIENCES',
                 'summary' => 'Travel becomes more complex when several people, destinations, providers, and preferences must be coordinated at the same time. SOV SUMMIT organises the details behind private and executive travel experiences, from transportation and accommodation to restaurants, activities, special occasions, and local support.',
                 'description' => null,
@@ -228,9 +228,9 @@ class ServiceSeeder extends Seeder
                 'suitable_for' => null,
                 'faqs' => [
                     ['q' => 'Does SOV SUMMIT arrange private flights?',
-                     'a' => "SOV SUMMIT coordinates private aviation requirements through appropriate aviation providers, subject to availability, destination, timing, and the client's requirements."],
+                        'a' => "SOV SUMMIT coordinates private aviation requirements through appropriate aviation providers, subject to availability, destination, timing, and the client's requirements."],
                     ['q' => 'Does SOV SUMMIT organise family trips?',
-                     'a' => 'Yes. SOV SUMMIT can coordinate family travel, including accommodation, transportation, child-friendly arrangements, restaurants, activities, special occasions, and multi-destination itineraries.'],
+                        'a' => 'Yes. SOV SUMMIT can coordinate family travel, including accommodation, transportation, child-friendly arrangements, restaurants, activities, special occasions, and multi-destination itineraries.'],
                 ],
                 'seo_title' => 'Private Travel, Aviation & Family Trip Coordination | SOV SUMMIT',
                 'seo_description' => 'Private aviation coordination, accommodation, chauffeur transportation, family trips, restaurants, activities, and bespoke travel experiences by SOV SUMMIT.',

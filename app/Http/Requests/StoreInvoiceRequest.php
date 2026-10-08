@@ -63,7 +63,8 @@ class StoreInvoiceRequest extends FormRequest
             ))
             ->map(function ($row) {
                 $row['vat_rate'] = $row['vat_rate'] === null || $row['vat_rate'] === '' ? 0 : $row['vat_rate'];
-                $row['total']    = $row['total']    === null || $row['total']    === '' ? 0 : $row['total'];
+                $row['total'] = $row['total'] === null || $row['total'] === '' ? 0 : $row['total'];
+
                 return $row;
             })
             ->values()

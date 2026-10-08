@@ -109,19 +109,19 @@ class Invoice extends Model
         $this->items()->delete();
 
         foreach (array_values($items) as $i => $row) {
-            $gross   = round((float) ($row['total'] ?? 0), 2);
+            $gross = round((float) ($row['total'] ?? 0), 2);
             $vatRate = round((float) ($row['vat_rate'] ?? 0), 2);
-            $net     = $vatRate > 0
+            $net = $vatRate > 0
                 ? round($gross * 100 / (100 + $vatRate), 2)
                 : $gross;
 
             $this->items()->create([
                 'description' => $row['description'],
-                'quantity'    => 1,
-                'unit_price'  => $net,   // Net amount (VAT-extracted)
-                'vat_rate'    => $vatRate,
-                'amount'      => $gross, // Gross total (VAT-inclusive)
-                'position'    => $i,
+                'quantity' => 1,
+                'unit_price' => $net,   // Net amount (VAT-extracted)
+                'vat_rate' => $vatRate,
+                'amount' => $gross, // Gross total (VAT-inclusive)
+                'position' => $i,
             ]);
         }
 
@@ -134,15 +134,15 @@ class Invoice extends Model
         $items = $this->items()->get();
 
         $subGross = round((float) $items->sum('amount'), 2);         // Σ gross (spec Sub Total)
-        $subNet   = round((float) $items->sum('unit_price'), 2);      // Σ net
+        $subNet = round((float) $items->sum('unit_price'), 2);      // Σ net
         $discount = max(0.0, min(round((float) $this->discount, 2), $subGross));
 
         $this->forceFill([
-            'subtotal'   => $subNet,               // stored as net (for reporting)
-            'discount'   => $discount,
-            'tax_rate'   => 0,
+            'subtotal' => $subNet,               // stored as net (for reporting)
+            'discount' => $discount,
+            'tax_rate' => 0,
             'tax_amount' => round($subGross - $subNet, 2),
-            'total'      => round($subGross - $discount, 2),
+            'total' => round($subGross - $discount, 2),
         ])->save();
     }
 

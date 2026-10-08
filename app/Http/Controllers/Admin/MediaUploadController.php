@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Support\MediaStorage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class MediaUploadController extends Controller
 {
@@ -16,14 +15,10 @@ class MediaUploadController extends Controller
             'file' => ['required', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
         ]);
 
-        $file = $request->file('file');
-        $ext = $file->getClientOriginalExtension() ?: 'jpg';
-        $path = 'media/'.date('Y/m').'/'.Str::uuid().'.'.$ext;
-
-        Storage::disk('spaces')->putFileAs('', $file, $path, ['visibility' => 'public']);
+        $path = MediaStorage::upload($request->file('file'), 'media');
 
         return response()->json([
-            'url' => Storage::disk('spaces')->url($path),
+            'url' => MediaStorage::url($path),
             'path' => $path,
         ]);
     }

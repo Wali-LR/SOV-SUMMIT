@@ -15,15 +15,17 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
+use App\Models\Blog;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $featuredEvents = \App\Models\Event::published()
+    $featuredEvents = Event::published()
         ->orderByRaw('event_date IS NULL, ABS(TIMESTAMPDIFF(DAY, event_date, NOW()))')
         ->limit(3)
         ->get();
 
-    $latestPosts = \App\Models\Blog::published()
+    $latestPosts = Blog::published()
         ->orderByDesc('published_at')
         ->orderByDesc('created_at')
         ->limit(3)
@@ -31,21 +33,21 @@ Route::get('/', function () {
 
     return view('pages.home', compact('featuredEvents', 'latestPosts'));
 })->name('home');
-Route::view('/about',                           'pages.about')->name('about');
-Route::get('/services',                         [ServiceController::class, 'index'])->name('services.index');
-Route::get('/management-training',              [ServiceController::class, 'managementTraining'])->name('services.management-training');
-Route::get('/services/{service:slug}',          [ServiceController::class, 'show'])->name('services.show');
-Route::view('/products',                        'pages.products');
-Route::get('/events',                           [EventController::class, 'index'])->name('events.index');
-Route::get('/events/{event:slug}',              [EventController::class, 'show'])->name('events.show');
-Route::get('/blog',                             [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/{blog:slug}',                 [BlogController::class, 'show'])->name('blog.show');
-Route::view('/insights',                        'pages.insights');
-Route::view('/contact',                         'pages.contact')->name('contact');
-Route::view('/legal-notice',                    'pages.legal.notice');
-Route::view('/privacy-policy',                  'pages.legal.privacy');
-Route::view('/cookie-policy',                   'pages.legal.cookie');
-Route::view('/terms-conditions',                'pages.legal.terms');
+Route::view('/about', 'pages.about')->name('about');
+Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+Route::get('/management-training', [ServiceController::class, 'managementTraining'])->name('services.management-training');
+Route::get('/services/{service:slug}', [ServiceController::class, 'show'])->name('services.show');
+Route::view('/products', 'pages.products');
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{event:slug}', [EventController::class, 'show'])->name('events.show');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{blog:slug}', [BlogController::class, 'show'])->name('blog.show');
+Route::view('/insights', 'pages.insights');
+Route::view('/contact', 'pages.contact')->name('contact');
+Route::view('/legal-notice', 'pages.legal.notice');
+Route::view('/privacy-policy', 'pages.legal.privacy');
+Route::view('/cookie-policy', 'pages.legal.cookie');
+Route::view('/terms-conditions', 'pages.legal.terms');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -68,24 +70,24 @@ Route::middleware('auth')->group(function () {
         Route::resource('blogs', AdminBlogController::class)->except(['show']);
         Route::resource('services', AdminServiceController::class)->except(['show']);
         Route::resource('pages', AdminPageController::class)->except(['show']);
-        Route::get ('customers/search', [CustomerController::class, 'search'])->name('customers.search');
-        Route::post('customers',        [CustomerController::class, 'store'])->name('customers.store');
+        Route::get('customers/search', [CustomerController::class, 'search'])->name('customers.search');
+        Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
 
-        Route::get  ('invoices/{invoice}/pdf',     [InvoiceController::class, 'pdf'])->name('invoices.pdf');
-        Route::get  ('invoices/{invoice}/preview', [InvoiceController::class, 'preview'])->name('invoices.preview');
-        Route::post ('invoices/{invoice}/send',    [InvoiceController::class, 'send'])->name('invoices.send');
-        Route::patch('invoices/{invoice}/status',  [InvoiceController::class, 'status'])->name('invoices.status');
+        Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'pdf'])->name('invoices.pdf');
+        Route::get('invoices/{invoice}/preview', [InvoiceController::class, 'preview'])->name('invoices.preview');
+        Route::post('invoices/{invoice}/send', [InvoiceController::class, 'send'])->name('invoices.send');
+        Route::patch('invoices/{invoice}/status', [InvoiceController::class, 'status'])->name('invoices.status');
         Route::resource('invoices', InvoiceController::class);
         Route::resource('comment-categories', CommentCategoryController::class)
             ->parameters(['comment-categories' => 'comment_category'])
             ->except(['show']);
 
-        Route::get   ('sections/templates',      [SectionController::class, 'templates'])->name('sections.templates');
-        Route::post  ('sections',                [SectionController::class, 'store'])->name('sections.store');
-        Route::post  ('sections/reorder',        [SectionController::class, 'reorder'])->name('sections.reorder');
-        Route::get   ('sections/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
-        Route::patch ('sections/{section}',      [SectionController::class, 'update'])->name('sections.update');
-        Route::delete('sections/{section}',      [SectionController::class, 'destroy'])->name('sections.destroy');
+        Route::get('sections/templates', [SectionController::class, 'templates'])->name('sections.templates');
+        Route::post('sections', [SectionController::class, 'store'])->name('sections.store');
+        Route::post('sections/reorder', [SectionController::class, 'reorder'])->name('sections.reorder');
+        Route::get('sections/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
+        Route::patch('sections/{section}', [SectionController::class, 'update'])->name('sections.update');
+        Route::delete('sections/{section}', [SectionController::class, 'destroy'])->name('sections.destroy');
     });
 });
 

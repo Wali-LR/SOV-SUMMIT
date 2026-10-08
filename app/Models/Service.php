@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasContentSections;
+use App\Support\MediaStorage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Service extends Model
@@ -68,21 +68,7 @@ class Service extends Model
 
     public function getHeroUrlAttribute(): ?string
     {
-        $path = $this->hero_image;
-        if (! $path) {
-            return null;
-        }
-        if (Str::startsWith($path, ['http://', 'https://'])) {
-            return $path;
-        }
-        if (Str::startsWith($path, 'assets/')) {
-            return asset($path);
-        }
-        try {
-            return Storage::disk('spaces')->url($path);
-        } catch (\Throwable) {
-            return asset($path);
-        }
+        return MediaStorage::url($this->hero_image);
     }
 
     public function scopePublished($query)
