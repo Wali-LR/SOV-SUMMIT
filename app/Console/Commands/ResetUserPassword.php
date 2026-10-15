@@ -29,5 +29,6 @@ class ResetUserPassword extends Command
         $this->info("Password for {$user->email} has been reset to: 12345678");
 
         return self::SUCCESS;
+        
     }
 }
