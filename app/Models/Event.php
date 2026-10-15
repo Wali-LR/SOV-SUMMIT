@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasContentSections;
+use App\Support\MediaStorage;
 use Database\Factories\EventFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Event extends Model
@@ -60,20 +60,7 @@ class Event extends Model
 
     public function getCoverUrlAttribute(): ?string
     {
-        if (! $this->cover_image) {
-            return null;
-        }
-        if (Str::startsWith($this->cover_image, ['http://', 'https://'])) {
-            return $this->cover_image;
-        }
-        if (Str::startsWith($this->cover_image, 'assets/')) {
-            return asset($this->cover_image);
-        }
-        try {
-            return Storage::disk('spaces')->url($this->cover_image);
-        } catch (\Throwable) {
-            return asset($this->cover_image);
-        }
+        return MediaStorage::url($this->cover_image);
     }
 
     public function scopePublished($query)

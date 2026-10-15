@@ -102,11 +102,20 @@ If you prefer using Dokploy's 1-Click Managed MySQL and Redis services:
      DB_USERNAME=your_mysql_user
      DB_PASSWORD=your_mysql_password
      
+     FILESYSTEM_DISK=spaces
+     DO_ACCESS_KEY_ID=your_spaces_access_key
+     DO_SECRET_ACCESS_KEY=your_spaces_secret_key
+     DO_DEFAULT_REGION=fra1
+     DO_BUCKET=localrydes-media
+     DO_ENDPOINT=https://fra1.digitaloceanspaces.com
+     DO_URL=
+     DO_PREFIX=sob-summit
+     
      AUTORUN_MIGRATIONS=true
      AUTORUN_WORKER=true
      AUTORUN_SCHEDULER=true
      ```
-   *(Note: Setting `AUTORUN_WORKER=true` and `AUTORUN_SCHEDULER=true` allows the single container's supervisor to run background queue jobs and cron automatically without needing extra containers).*
+   *(Note: Setting `AUTORUN_WORKER=true` and `AUTORUN_SCHEDULER=true` allows the single container's supervisor to run background queue jobs and cron automatically without needing extra containers. Leave `DO_URL` empty to auto-build spaces URLs, or set your CDN endpoint).*
 
 5. **Set Container Port & Domain**:
    - Port: `80`

@@ -116,7 +116,7 @@ class SeoGeneratorController extends Controller
     public function serviceSeo(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'title'   => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255'],
             'eyebrow' => ['nullable', 'string', 'max:255'],
             'context' => ['nullable', 'string', 'max:2000'],
         ]);
@@ -134,8 +134,8 @@ class SeoGeneratorController extends Controller
         }
 
         return response()->json([
-            'seo_title'    => trim((string) ($result['data']['seo_title'] ?? '')),
-            'summary'      => trim((string) ($result['data']['summary'] ?? $result['data']['description'] ?? '')),
+            'seo_title' => trim((string) ($result['data']['seo_title'] ?? '')),
+            'summary' => trim((string) ($result['data']['summary'] ?? $result['data']['description'] ?? '')),
             'seo_keywords' => trim((string) ($result['data']['seo_keywords'] ?? $result['data']['keywords'] ?? '')),
         ]);
     }
@@ -143,7 +143,7 @@ class SeoGeneratorController extends Controller
     public function serviceDescription(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'title'   => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255'],
             'eyebrow' => ['nullable', 'string', 'max:255'],
             'summary' => ['nullable', 'string', 'max:2000'],
         ]);
@@ -181,6 +181,7 @@ class SeoGeneratorController extends Controller
         $lines[] = '- "summary": meta description, ONE sentence, 130-155 characters. Do not repeat the seo_title verbatim.';
         $lines[] = '- "seo_keywords": 6-10 relevant keywords/phrases, comma-separated, lowercase, no hashtags.';
         $lines[] = 'Before returning, silently count the characters of seo_title and shorten it if it exceeds 60.';
+
         return implode("\n", $lines);
     }
 
@@ -203,6 +204,7 @@ class SeoGeneratorController extends Controller
         $lines[] = '  4) <h3>Programme highlights</h3> followed by a <ul> with 4-6 <li> bullets naming concrete deliverables or session types.';
         $lines[] = '  5) Closing <p> (1-2 sentences): invite qualified enquiries without hard sell.';
         $lines[] = 'Rules: use only <h3>, <p>, <strong>, <em>, <ul>, <ol>, <li>, <br>. No inline styles, no links, no headings above <h3>, no emojis, no exclamation marks. Do not fabricate specific dates, prices, speaker names, partner names, or attendee numbers.';
+
         return implode("\n", $lines);
     }
 
@@ -222,6 +224,7 @@ class SeoGeneratorController extends Controller
         $lines[] = '- "summary": meta description, ONE sentence, 130-155 characters. Do not repeat the seo_title verbatim.';
         $lines[] = '- "seo_keywords": 6-10 relevant keywords/phrases, comma-separated, lowercase, no hashtags.';
         $lines[] = 'Before returning, silently count the characters of seo_title and shorten it if it exceeds 60.';
+
         return implode("\n", $lines);
     }
 
@@ -244,6 +247,7 @@ class SeoGeneratorController extends Controller
         $lines[] = '  4) <h3>How SOV SUMMIT approaches this</h3> followed by 1-2 <p> paragraphs on the coordination angle (venue, hospitality, logistics, security, protocol, media, transport — whichever fits).';
         $lines[] = '  5) Closing <p> (1-2 sentences): invite qualified enquiries without hard sell.';
         $lines[] = 'Rules: use only <h3>, <p>, <strong>, <em>, <ul>, <ol>, <li>, <br>. No inline styles, no links, no headings above <h3>, no emojis, no exclamation marks. Do not fabricate specific dates, prices, speaker names, partner names, statistics, or attendee numbers.';
+
         return implode("\n", $lines);
     }
 
@@ -263,6 +267,7 @@ class SeoGeneratorController extends Controller
         $lines[] = '- "summary": meta description, ONE sentence, 130-155 characters, describing what SOV SUMMIT coordinates for this service.';
         $lines[] = '- "seo_keywords": 6-10 relevant keywords/phrases, comma-separated, lowercase, no hashtags.';
         $lines[] = 'Before returning, silently count the characters of seo_title and shorten it if it exceeds 60.';
+
         return implode("\n", $lines);
     }
 
@@ -285,13 +290,14 @@ class SeoGeneratorController extends Controller
         $lines[] = '  4) <h3>Typical requirements</h3> followed by a <ul> with 4-6 <li> bullets naming concrete deliverables or scenarios.';
         $lines[] = '  5) Closing <p> (1-2 sentences): invite qualified enquiries without hard sell.';
         $lines[] = 'Rules: use only <h3>, <p>, <strong>, <em>, <ul>, <ol>, <li>, <br>. No inline styles, no links, no headings above <h3>, no emojis, no exclamation marks. Do not fabricate specific prices, named clients, or partner organisations.';
+
         return implode("\n", $lines);
     }
 
     private function callOpenAi(string $system, string $user, int $maxTokens): array
     {
         $apiKey = config('services.openai.key');
-        if (!$apiKey) {
+        if (! $apiKey) {
             return ['ok' => false, 'status' => 500, 'payload' => ['error' => 'OpenAI API key is not configured.']];
         }
 
@@ -308,7 +314,7 @@ class SeoGeneratorController extends Controller
                 ],
             ]);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return [
                 'ok' => false,
                 'status' => 502,
@@ -322,7 +328,7 @@ class SeoGeneratorController extends Controller
         $content = $response->json('choices.0.message.content');
         $parsed = json_decode((string) $content, true);
 
-        if (!is_array($parsed)) {
+        if (! is_array($parsed)) {
             return [
                 'ok' => false,
                 'status' => 502,

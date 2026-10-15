@@ -39,7 +39,7 @@ class SectionController extends Controller
 
         $model = $this->resolveModel($data['sectionable_type'], $data['sectionable_id']);
 
-        $section = new ContentSection();
+        $section = new ContentSection;
         $section->sectionable_type = $data['sectionable_type'];
         $section->sectionable_id = $data['sectionable_id'];
         $section->type = $data['type'];
@@ -94,6 +94,7 @@ class SectionController extends Controller
     public function destroy(ContentSection $section)
     {
         $section->delete();
+
         return response()->json(['ok' => true]);
     }
 
@@ -129,6 +130,7 @@ class SectionController extends Controller
     protected function resolveModel(string $class, int $id)
     {
         abort_unless(class_exists($class), 422, 'Unknown model.');
+
         return $class::query()->findOrFail($id);
     }
 

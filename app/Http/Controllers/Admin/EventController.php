@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventRequest;
 use App\Models\Event;
+use App\Support\MediaStorage;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -15,12 +14,13 @@ class EventController extends Controller
     public function index(): View
     {
         $events = Event::orderByDesc('event_date')->orderByDesc('created_at')->paginate(20);
+
         return view('admin.events.index', compact('events'));
     }
 
     public function create(): View
     {
-        return view('admin.events.create', ['event' => new Event()]);
+        return view('admin.events.create', ['event' => new Event]);
     }
 
     public function store(StoreEventRequest $request): RedirectResponse
@@ -28,7 +28,7 @@ class EventController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $this->uploadCover($request->file('cover_image'));
+            $data['cover_image'] = MediaStorage::upload($request->file('cover_image'), 'events');
         } else {
             unset($data['cover_image']);
         }
@@ -53,8 +53,8 @@ class EventController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('cover_image')) {
-            $newPath = $this->uploadCover($request->file('cover_image'));
-            $this->deleteCover($event->cover_image);
+            $newPath = MediaStorage::upload($request->file('cover_image'), 'events');
+            MediaStorage::delete($event->cover_image);
             $data['cover_image'] = $newPath;
         } else {
             unset($data['cover_image']);
@@ -72,26 +72,11 @@ class EventController extends Controller
 
     public function destroy(Event $event): RedirectResponse
     {
-        $this->deleteCover($event->cover_image);
+        MediaStorage::delete($event->cover_image);
         $title = $event->title;
         $event->delete();
 
         return redirect()->route('admin.events.index')
             ->with('status', "Event “{$title}” deleted.");
-    }
-
-    private function uploadCover($file): string
-    {
-        $ext = $file->getClientOriginalExtension() ?: 'jpg';
-        $filename = 'events/'.date('Y/m').'/'.Str::uuid().'.'.$ext;
-        Storage::disk('spaces')->putFileAs('', $file, $filename, ['visibility' => 'public']);
-        return $filename;
-    }
-
-    private function deleteCover(?string $path): void
-    {
-        if ($path && !Str::startsWith($path, ['http://', 'https://'])) {
-            Storage::disk('spaces')->delete($path);
-        }
     }
 }

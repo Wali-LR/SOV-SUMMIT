@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Event;
 use App\Models\Page;
 use App\Models\Service;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class StorageUrlFallbackTest extends TestCase
@@ -57,5 +58,57 @@ class StorageUrlFallbackTest extends TestCase
         $service = new Service;
         $service->hero_image = 'uploads/service.jpg';
         $this->assertSame(asset('uploads/service.jpg'), $service->hero_url);
+    }
+
+    public function test_spaces_url_generates_valid_absolute_url_when_do_url_is_null_or_empty(): void
+    {
+        config([
+            'filesystems.disks.spaces.driver' => 's3',
+            'filesystems.disks.spaces.key' => 'dummy-key',
+            'filesystems.disks.spaces.secret' => 'dummy-secret',
+            'filesystems.disks.spaces.bucket' => 'localrydes-media',
+            'filesystems.disks.spaces.region' => 'fra1',
+            'filesystems.disks.spaces.endpoint' => 'https://fra1.digitaloceanspaces.com',
+            'filesystems.disks.spaces.root' => 'sob-summit',
+            'filesystems.disks.spaces.url' => null,
+        ]);
+        Storage::purge('spaces');
+
+        $event = new Event;
+        $event->cover_image = 'events/2026/10/banner.webp';
+        $this->assertSame(
+            'https://localrydes-media.fra1.digitaloceanspaces.com/sob-summit/events/2026/10/banner.webp',
+            $event->cover_url
+        );
+
+        // Even if config url was an empty string (the bug before this fix)
+        config(['filesystems.disks.spaces.url' => '']);
+        Storage::purge('spaces');
+        $this->assertSame(
+            'https://localrydes-media.fra1.digitaloceanspaces.com/sob-summit/events/2026/10/banner.webp',
+            $event->cover_url
+        );
+    }
+
+    public function test_spaces_url_uses_cdn_when_do_url_is_specified(): void
+    {
+        config([
+            'filesystems.disks.spaces.driver' => 's3',
+            'filesystems.disks.spaces.key' => 'dummy-key',
+            'filesystems.disks.spaces.secret' => 'dummy-secret',
+            'filesystems.disks.spaces.bucket' => 'localrydes-media',
+            'filesystems.disks.spaces.region' => 'fra1',
+            'filesystems.disks.spaces.endpoint' => 'https://fra1.digitaloceanspaces.com',
+            'filesystems.disks.spaces.root' => 'sob-summit',
+            'filesystems.disks.spaces.url' => 'https://localrydes-media.fra1.cdn.digitaloceanspaces.com',
+        ]);
+        Storage::purge('spaces');
+
+        $event = new Event;
+        $event->cover_image = 'events/2026/10/banner.webp';
+        $this->assertSame(
+            'https://localrydes-media.fra1.cdn.digitaloceanspaces.com/sob-summit/events/2026/10/banner.webp',
+            $event->cover_url
+        );
     }
 }

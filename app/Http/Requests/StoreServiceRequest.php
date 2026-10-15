@@ -17,29 +17,29 @@ class StoreServiceRequest extends FormRequest
         $serviceId = $this->route('service')?->id;
 
         return [
-            'title'   => ['required', 'string', 'max:255'],
-            'slug'    => ['nullable', 'string', 'max:200', 'alpha_dash', Rule::unique('services', 'slug')->ignore($serviceId)],
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:200', 'alpha_dash', Rule::unique('services', 'slug')->ignore($serviceId)],
             'eyebrow' => ['nullable', 'string', 'max:120'],
             'summary' => ['nullable', 'string', 'max:2000'],
             'description' => ['nullable', 'string'],
-            'hero_image'  => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'hero_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
 
             'services_included_label' => ['nullable', 'string', 'max:120'],
-            'services_included'       => ['nullable', 'string'],
-            'suitable_for_label'      => ['nullable', 'string', 'max:120'],
-            'suitable_for'            => ['nullable', 'string'],
+            'services_included' => ['nullable', 'string'],
+            'suitable_for_label' => ['nullable', 'string', 'max:120'],
+            'suitable_for' => ['nullable', 'string'],
 
-            'question'   => ['nullable', 'array'],
+            'question' => ['nullable', 'array'],
             'question.*' => ['nullable', 'string', 'max:255'],
-            'answer'     => ['nullable', 'array'],
-            'answer.*'   => ['nullable', 'string', 'max:2000'],
+            'answer' => ['nullable', 'array'],
+            'answer.*' => ['nullable', 'string', 'max:2000'],
 
-            'seo_title'       => ['nullable', 'string', 'max:160'],
+            'seo_title' => ['nullable', 'string', 'max:160'],
             'seo_description' => ['nullable', 'string', 'max:500'],
-            'seo_keywords'    => ['nullable', 'string', 'max:500'],
+            'seo_keywords' => ['nullable', 'string', 'max:500'],
 
             'is_published' => ['sometimes', 'boolean'],
-            'position'     => ['nullable', 'integer', 'min:0'],
+            'position' => ['nullable', 'integer', 'min:0'],
             'published_at' => ['nullable', 'date'],
         ];
     }
@@ -60,8 +60,8 @@ class StoreServiceRequest extends FormRequest
         $data = $this->validated();
 
         $data['services_included'] = $this->splitLines($data['services_included'] ?? null);
-        $data['suitable_for']      = $this->splitLines($data['suitable_for'] ?? null);
-        $data['faqs']              = $this->zipFaqs($data['question'] ?? [], $data['answer'] ?? []);
+        $data['suitable_for'] = $this->splitLines($data['suitable_for'] ?? null);
+        $data['faqs'] = $this->zipFaqs($data['question'] ?? [], $data['answer'] ?? []);
 
         unset($data['question'], $data['answer']);
 
@@ -74,8 +74,11 @@ class StoreServiceRequest extends FormRequest
 
     private function splitLines(?string $text): ?array
     {
-        if (!$text) return null;
+        if (! $text) {
+            return null;
+        }
         $items = array_values(array_filter(array_map('trim', preg_split('/\r?\n/', $text))));
+
         return $items ?: null;
     }
 
@@ -84,10 +87,13 @@ class StoreServiceRequest extends FormRequest
         $out = [];
         foreach ($q as $i => $question) {
             $question = trim((string) $question);
-            $answer   = trim((string) ($a[$i] ?? ''));
-            if ($question === '' && $answer === '') continue;
+            $answer = trim((string) ($a[$i] ?? ''));
+            if ($question === '' && $answer === '') {
+                continue;
+            }
             $out[] = ['q' => $question, 'a' => $answer];
         }
+
         return $out ?: null;
     }
 }

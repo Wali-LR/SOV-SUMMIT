@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreServiceRequest;
 use App\Models\Service;
+use App\Support\MediaStorage;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
@@ -15,12 +14,13 @@ class ServiceController extends Controller
     public function index(): View
     {
         $services = Service::ordered()->paginate(20);
+
         return view('admin.services.index', compact('services'));
     }
 
     public function create(): View
     {
-        return view('admin.services.create', ['service' => new Service()]);
+        return view('admin.services.create', ['service' => new Service]);
     }
 
     public function store(StoreServiceRequest $request): RedirectResponse
@@ -28,7 +28,7 @@ class ServiceController extends Controller
         $data = $request->payload();
 
         if ($request->hasFile('hero_image')) {
-            $data['hero_image'] = $this->uploadHero($request->file('hero_image'));
+            $data['hero_image'] = MediaStorage::upload($request->file('hero_image'), 'services');
         } else {
             unset($data['hero_image']);
         }
@@ -53,8 +53,8 @@ class ServiceController extends Controller
         $data = $request->payload();
 
         if ($request->hasFile('hero_image')) {
-            $newPath = $this->uploadHero($request->file('hero_image'));
-            $this->deleteHero($service->hero_image);
+            $newPath = MediaStorage::upload($request->file('hero_image'), 'services');
+            MediaStorage::delete($service->hero_image);
             $data['hero_image'] = $newPath;
         } else {
             unset($data['hero_image']);
@@ -72,26 +72,11 @@ class ServiceController extends Controller
 
     public function destroy(Service $service): RedirectResponse
     {
-        $this->deleteHero($service->hero_image);
+        MediaStorage::delete($service->hero_image);
         $title = $service->title;
         $service->delete();
 
         return redirect()->route('admin.services.index')
             ->with('status', "Service “{$title}” deleted.");
-    }
-
-    private function uploadHero($file): string
-    {
-        $ext = $file->getClientOriginalExtension() ?: 'jpg';
-        $filename = 'services/'.date('Y/m').'/'.Str::uuid().'.'.$ext;
-        Storage::disk('spaces')->putFileAs('', $file, $filename, ['visibility' => 'public']);
-        return $filename;
-    }
-
-    private function deleteHero(?string $path): void
-    {
-        if ($path && !Str::startsWith($path, ['http://', 'https://', 'assets/'])) {
-            Storage::disk('spaces')->delete($path);
-        }
     }
 }

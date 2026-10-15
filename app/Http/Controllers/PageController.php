@@ -11,7 +11,7 @@ class PageController extends Controller
     {
         $page = Page::query()
             ->where('slug', $slug)
-            ->when(!optional(auth()->user())->id, fn ($q) => $q->where('is_published', true))
+            ->when(! optional(auth()->user())->id, fn ($q) => $q->where('is_published', true))
             ->firstOrFail();
 
         return view('pages.dynamic.show', compact('page'));

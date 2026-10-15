@@ -18,7 +18,7 @@ class CommentCategoryController extends Controller
         $categories = CommentCategory::query()
             ->when($search !== '', fn ($q) => $q->where(function ($qq) use ($search) {
                 $qq->where('name', 'like', "%{$search}%")
-                   ->orWhere('slug', 'like', "%{$search}%");
+                    ->orWhere('slug', 'like', "%{$search}%");
             }))
             ->orderBy('sort_order')
             ->orderBy('name')
