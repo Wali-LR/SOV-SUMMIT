@@ -1,0 +1,78 @@
+/*
+ * Summernote fullscreen mode for the admin editors.
+ * Out of the box summernote-lite's fullscreen has a transparent background,
+ * so the page behind shows through, and it sits under the sticky sidebar.
+ * This turns it into a clean, centred writing view.
+ */
+.note-editor.note-frame.fullscreen {
+    position: fixed !important;
+    inset: 0;
+    z-index: 1000;
+    width: 100% !important;
+    height: 100vh !important;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.note-editor.note-frame.fullscreen .note-toolbar {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px;
+    padding: 10px 16px;
+    border-radius: 0;
+    border-bottom: 1px solid rgb(226 232 240);
+    background: rgb(248 250 252);
+}
+
+.note-editor.note-frame.fullscreen .note-editing-area {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    background: #fff;
+}
+
+.note-editor.note-frame.fullscreen .note-editable {
+    height: auto !important;
+    min-height: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 48px 24px 120px;
+    background: #fff;
+    font-size: 17px;
+    line-height: 1.75;
+    color: rgb(15 23 42);
+}
+
+.note-editor.note-frame.fullscreen .note-editable h3 { font-size: 24px; margin: 32px 0 12px; }
+.note-editor.note-frame.fullscreen .note-editable h4 { font-size: 19px; margin: 24px 0 10px; }
+.note-editor.note-frame.fullscreen .note-editable p { margin: 0 0 18px; }
+
+.note-editor.note-frame.fullscreen .note-codable {
+    height: 100% !important;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    font-size: 13px;
+    background: rgb(15 23 42);
+    color: rgb(226 232 240);
+}
+
+.note-editor.note-frame.fullscreen .note-statusbar { display: none; }
+
+/* Active state for the fullscreen toggle so it's clear how to exit. */
+.note-editor.note-frame.fullscreen .note-btn-fullscreen,
+.note-editor.note-frame.fullscreen .btn-fullscreen.active {
+    background: rgb(15 23 42);
+    color: #fff;
+}
+
+@media (max-width: 640px) {
+    .note-editor.note-frame.fullscreen .note-editable { padding: 24px 16px 96px; font-size: 16px; }
+}

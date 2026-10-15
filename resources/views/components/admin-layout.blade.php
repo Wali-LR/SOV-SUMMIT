@@ -76,6 +76,12 @@
                 </a>
 
                 <div class="px-2 pt-6 pb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">Others</div>
+                @php $isUsers = request()->routeIs('admin.users.*'); @endphp
+                <a href="{{ route('admin.users.index') }}"
+                   class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium mb-1 {{ $isUsers ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
+                    Users
+                </a>
                 @php $isCommentCats = request()->routeIs('admin.comment-categories.*'); @endphp
                 <a href="{{ route('admin.comment-categories.index') }}"
                    class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium mb-1 {{ $isCommentCats ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100' }}">

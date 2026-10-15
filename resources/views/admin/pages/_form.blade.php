@@ -7,6 +7,7 @@
 
 @push('head')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+<link href="{{ asset('assets/css/summernote-admin.css') }}?v={{ filemtime(public_path('assets/css/summernote-admin.css')) }}" rel="stylesheet">
 <style>
     .note-editor.note-frame { border-color: rgb(203 213 225); border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
     .note-editor.note-frame .note-toolbar { border-bottom: 1px solid rgb(226 232 240); background: rgb(248 250 252); border-radius: 0.375rem 0.375rem 0 0; padding: 6px 8px; }
@@ -211,6 +212,7 @@
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script src="{{ asset('assets/js/summernote-paste.js') }}?v={{ filemtime(public_path('assets/js/summernote-paste.js')) }}"></script>
 <script>
 (function () {
     const csrf = document.querySelector('meta[name="csrf-token"]').content;
@@ -245,6 +247,7 @@
         ],
         callbacks: {
             onImageUpload: function (files) { for (let i=0;i<files.length;i++) uploadInlineImage(files[i]); },
+            onPaste: SnPaste.handler($desc),
         },
     });
 

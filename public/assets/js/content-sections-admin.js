@@ -215,6 +215,7 @@
                 ['view', ['codeview']],
             ],
             callbacks: {
+                onPaste: window.SnPaste ? window.SnPaste.handler($t) : undefined,
                 onImageUpload: function (files) {
                     for (let i = 0; i < files.length; i++) {
                         uploadInlineImage($t, files[i]);

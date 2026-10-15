@@ -70,8 +70,8 @@ return [
             'endpoint' => env('DO_ENDPOINT') ?: 'https://fra1.digitaloceanspaces.com',
             'use_path_style_endpoint' => false,
             'visibility' => 'public',
-            'throw' => false,
-            'report' => false,
+            'throw' => true,
+            'report' => true,
             'root' => env('DO_PREFIX', 'sob-summit'),
         ],
 

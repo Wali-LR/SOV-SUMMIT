@@ -29,10 +29,12 @@
     @push('head')
         <link rel="stylesheet" href="{{ asset('assets/css/content-sections-admin.css') }}">
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+        <link href="{{ asset('assets/css/summernote-admin.css') }}?v={{ filemtime(public_path('assets/css/summernote-admin.css')) }}" rel="stylesheet">
     @endpush
     @push('scripts')
         <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+        <script src="{{ asset('assets/js/summernote-paste.js') }}?v={{ filemtime(public_path('assets/js/summernote-paste.js')) }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
         <script src="{{ asset('assets/js/content-sections-admin.js') }}"></script>
     @endpush

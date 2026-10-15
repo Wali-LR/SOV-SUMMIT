@@ -7,6 +7,7 @@
 
 @push('head')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+<link href="{{ asset('assets/css/summernote-admin.css') }}?v={{ filemtime(public_path('assets/css/summernote-admin.css')) }}" rel="stylesheet">
 <style>
     .note-editor.note-frame { border-color: rgb(203 213 225); border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
     .note-editor.note-frame .note-toolbar { border-bottom: 1px solid rgb(226 232 240); background: rgb(248 250 252); border-radius: 0.375rem 0.375rem 0 0; padding: 6px 8px; }
@@ -289,6 +290,7 @@
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script src="{{ asset('assets/js/summernote-paste.js') }}?v={{ filemtime(public_path('assets/js/summernote-paste.js')) }}"></script>
 <script>
 (function () {
     const csrf = document.querySelector('meta[name="csrf-token"]').content;
@@ -334,52 +336,10 @@
             onImageUpload: function (files) {
                 for (let i = 0; i < files.length; i++) uploadInlineImage(files[i]);
             },
-            onPaste: function (e) {
-                // Strip inline font/color/size junk from pasted content — keeps
-                // only paragraph breaks, headings, lists, links, bold, italic.
-                const ev = e.originalEvent || e;
-                const cb = ev.clipboardData || window.clipboardData;
-                if (!cb) return;
-                e.preventDefault();
-                const html = cb.getData('text/html');
-                const text = cb.getData('text/plain') || '';
-                if (html) {
-                    $desc.summernote('pasteHTML', sanitizePastedHtml(html));
-                } else {
-                    // Preserve line breaks when plain-text pasting.
-                    const safe = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-                    $desc.summernote('pasteHTML', '<p>' + safe.replace(/\r?\n\r?\n+/g,'</p><p>').replace(/\r?\n/g,'<br>') + '</p>');
-                }
-            },
+            onPaste: SnPaste.handler($desc),
         },
     });
 
-    // Allowlist-based sanitiser: keeps semantic tags, drops style/class/id
-    // attributes and unwraps <span>/<font> wrappers that carry inline styles.
-    function sanitizePastedHtml(html) {
-        const allowedTags = new Set(['P','BR','STRONG','B','EM','I','U','H3','H4','UL','OL','LI','BLOCKQUOTE','A']);
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = html;
-
-        (function walk(node) {
-            const children = Array.from(node.childNodes);
-            children.forEach(walk);
-            if (node.nodeType !== 1) return;
-
-            const tag = node.tagName;
-            if (!allowedTags.has(tag)) {
-                while (node.firstChild) node.parentNode.insertBefore(node.firstChild, node);
-                node.parentNode.removeChild(node);
-                return;
-            }
-            for (const attr of Array.from(node.attributes)) {
-                if (tag === 'A' && (attr.name === 'href' || attr.name === 'title')) continue;
-                node.removeAttribute(attr.name);
-            }
-        })(wrapper);
-
-        return wrapper.innerHTML;
-    }
 
     function showToast(message, ok = true) {
         const t = document.createElement('div');
